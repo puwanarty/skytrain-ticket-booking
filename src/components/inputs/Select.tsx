@@ -21,7 +21,7 @@ const Select: React.FC<SelectProps> = ({ label, placeholder, options, value, onC
   const [displayValue, setDisplayValue] = useState<Station | undefined>(undefined)
 
   useEffect(() => {
-    const index = options.findIndex((item) => item.id === value)
+    const index = options.findIndex((item) => item.stations.some((station) => station.id === value))
     if (index > -1) {
       setSelected(index)
     }
