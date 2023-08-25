@@ -60,9 +60,7 @@ const Booking: React.FC<BookingProps> = () => {
         status: 'paid',
         createAt: new Date().toISOString(),
       } as Ticket
-
       addTicket(dto)
-
       onChangeState('homepage')
     }
     setStep(s + 1)
