@@ -4,6 +4,8 @@ import Select from '@/components/inputs/Select'
 import TicketLayout from '@/components/partials/TicketLayout'
 import { DataContext } from '@/contexts/data'
 import { LayoutContext } from '@/contexts/layout'
+import { Ticket } from '@/types/dto'
+import { uuid } from '@/utils/data'
 import { FaArrowRight } from '@react-icons/all-files/fa/FaArrowRight'
 import { FaCalendarCheck } from '@react-icons/all-files/fa/FaCalendarCheck'
 import { FaCcMastercard } from '@react-icons/all-files/fa/FaCcMastercard'
@@ -31,7 +33,7 @@ interface BookingProps {}
 
 const Booking: React.FC<BookingProps> = () => {
   const { t } = useTranslation()
-  const { getAllLine, getAllStation } = useContext(DataContext)
+  const { getAllLine, getAllStation, addTicket } = useContext(DataContext)
   const { onChangeState } = useContext(LayoutContext)
   const lines = getAllLine()
   const stations = getAllStation()
@@ -41,26 +43,25 @@ const Booking: React.FC<BookingProps> = () => {
   const [date, setDate] = useState(new Date().toISOString())
   const [amount, setAmount] = useState(1)
   const [payment, setPayment] = useState('')
-  const [id, setId] = useState('')
+  const [ticketId] = useState(uuid())
 
   const [step, setStep] = useState(1)
 
   const onSubmitStep = (s: number) => {
     if (s === 3) {
-      //   // store data to session storage
-      //   const dto = {
-      //     id: randomId(),
-      //     from,
-      //     to,
-      //     date,
-      //     amount,
-      //     payment,
-      //     createAt: new Date().toISOString(),
-      //   }
+      const dto = {
+        id: ticketId,
+        from,
+        to,
+        date,
+        amount,
+        payment,
+        price: amount * 50,
+        status: 'paid',
+        createAt: new Date().toISOString(),
+      } as Ticket
 
-      //   let data = JSON.parse(sessionStorage.getItem('booking') || '[]')
-      //   data.push(dto)
-      //   sessionStorage.setItem('booking', JSON.stringify(data))
+      addTicket(dto)
 
       onChangeState('homepage')
     }
@@ -205,16 +206,16 @@ const Booking: React.FC<BookingProps> = () => {
                 <div className="flex items-center justify-between gap-6">
                   <FaUserAlt className="h-6 w-6 text-blue-800" />
                   <span>{amount}</span>
-                  <span className="w-10 text-center">คน</span>
+                  <span className="w-10 text-center">{t('booking.unit.person')}</span>
                 </div>
                 <div className="flex items-center justify-between gap-6">
                   <FaCoins className="h-6 w-6 text-blue-800" />
                   <span>{amount * 50}</span>
-                  <span className="w-10 text-center">บาท</span>
+                  <span className="w-10 text-center">{t('booking.unit.baht')}</span>
                 </div>
               </div>
               <div className="flex flex-1 flex-col items-center justify-evenly gap-2 font-bold">
-                <span>เลือกวิธีการชำระเงิน</span>
+                <span>{t('booking.payment.title')}</span>
                 {['promptpay', 'creditcard', 'banktransfer'].map((item, index) => (
                   <button
                     key={index}
@@ -241,8 +242,10 @@ const Booking: React.FC<BookingProps> = () => {
           <div className="flex h-full flex-1 flex-col justify-center gap-8">
             <div className="flex flex-1 gap-8 text-lg">
               <div className="flex flex-1 flex-col items-center justify-evenly font-bold">
-                <span>ยืนยันการจองสำเร็จ</span>
-                <span>รหัสการจอง: {id}</span>
+                <span>{t('booking.completed')}</span>
+                <span>
+                  {t('booking.bookingId')} {ticketId}
+                </span>
               </div>
               <div className="flex flex-1 flex-col items-center justify-evenly font-bold">
                 <img className="h-full rounded-lg object-cover" src={'/qr-code.png'} alt="qr-code" />
