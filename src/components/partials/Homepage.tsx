@@ -15,7 +15,7 @@ const Homepage: React.FC = () => {
           key={index}
           className="flex h-64 w-64 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-2xl transition-all duration-200 hover:scale-110 "
           onClick={() => onChangeState(item)}>
-          {item === 'map' ? (
+          {item === 'maps' ? (
             <FaMap className="h-24 w-24 text-blue-800" />
           ) : (
             <FaTicketAlt className="h-24 w-24 text-blue-800" />
