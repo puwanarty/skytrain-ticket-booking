@@ -44,20 +44,24 @@
         "truewallet": "ทรูวอลเล็ต"
       },
       "completed": "ยืนยันการจองสำเร็จ",
-      "bookingId": "รหัสการจอง"
-    },
-    "inbox": {
+      "bookingId": "รหัสการจอง",
       "status": {
         "paid": "ชำระเงินแล้ว",
         "pending": "รอการชำระเงิน",
-        "cancelled": "ยกเลิกแล้ว"
+        "cancelled": "ยกเลิกแล้ว",
+        "used": "ใช้งานแล้ว",
+        "expired": "หมดอายุ"
       }
+    },
+    "inbox": {
+      "message": "ตั๋วเดินทางจาก {{from}} ไปยัง {{to}} ได้{{status}}"
     },
     "lines": {
       "purple": "สายสีม่วง",
       "blue": "สายสีน้ำเงิน",
       "green": "สายสีเขียว",
       "yellow": "สายสีเหลือง"
-    }
+    },
+    "myBooking": {}
   }
 }

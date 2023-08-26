@@ -1,0 +1,85 @@
+// compare with src\locales\en.json
+// this is a copy of en.json, restructuring the json file to make it easier to read and edit
+// {
+//   "translation": {
+//     "lang": "th",
+//     : {
+//       "sorry": "ขออภัย หน้านี้ยังไม่พร้อมใช้งาน",
+//       "mobile": "ขออภัย หน้านี้ยังไม่พร้อมใช้งาน กรุณาเข้าใช้งานผ่านคอมพิวเตอร์"
+//     },
+//     "banner": {
+//       "default": "ระบบขนส่งมวลชน",
+//       "booking": "ระบบจองตั๋ว"
+//     },
+//     "navbar": {
+//       "homepage": "หน้าหลัก",
+//       "mybooking": "ตั๋วของฉัน",
+//       "inbox": "กล่องข้อความ",
+//       "contactus": "ติดต่อเรา",
+//       "helpcenter": "ศูนย์ช่วยเหลือ"
+//     },
+//     "homepage": {
+//       "map": "แผนที่รถไฟฟ้า",
+//       "booking": "ซื้อบัตรโดยสาร"
+//     },
+//     "booking": {
+//       "title": "รายละเอียดการจอง",
+//       "from": "จาก",
+//       "to": "ไป",
+//       "date": "วันที่เดินทาง",
+//       "amount": "จำนวน",
+//       "submit": {
+//         "1": "ยืนยันการจอง",
+//         "2": "ชำระเงิน",
+//         "3": "เสร็จสิ้น"
+//       },
+//       "unit": {
+//         "person": "คน",
+//         "baht": "บาท"
+//       },
+//       "placeholder": "เลือกสถานี",
+//       "payment": {
+//         "title": "เลือกวิธีการชำระเงิน",
+//         "promptpay": "พร้อมเพย์",
+//         "creditcard": "บัตรเครดิต",
+//         "banktransfer": "โอนผ่านธนาคาร",
+//         "truewallet": "ทรูวอลเล็ต"
+//       },
+//       "completed": "ยืนยันการจองสำเร็จ",
+//       "bookingId": "รหัสการจอง",
+//       "status": {
+//         "paid": "ชำระเงินแล้ว",
+//         "pending": "รอการชำระเงิน",
+//         "cancelled": "ยกเลิกแล้ว",
+//         "used": "ใช้งานแล้ว",
+//         "expired": "หมดอายุ"
+//       }
+//     },
+//     "inbox": {
+//       "message": "ตั๋วเดินทางจาก {{from}} ไปยัง {{to}} ได้{{status}}"
+//     },
+//     "lines": {
+//       "purple": "สายสีม่วง",
+//       "blue": "สายสีน้ำเงิน",
+//       "green": "สายสีเขียว",
+//       "yellow": "สายสีเหลือง"
+//     },
+//     "myBooking": {}
+//   }
+// }
+
+{
+	"translation": {
+		"lang": "th",
+		// separate the keys into sections
+		"info": {
+			"under_construction": "ขออภัย หน้านี้ยังไม่พร้อมใช้งาน",
+			"not_supported:": "ขออภัย หน้านี้ยังไม่พร้อมใช้งาน กรุณาเข้าใช้งานผ่านคอมพิวเตอร์"
+		},
+		"layout": {
+			"navbar": {
+				
+			}
+		}
+	}
+}
