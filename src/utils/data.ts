@@ -6,7 +6,7 @@ export const uuid = () => {
     Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
       .substring(1)
-  return `${s4()}${s4()}-${s4()}${s4()}-${s4()}${s4()}`
+  return `${s4()}-${s4()}`.toUpperCase()
 }
 
 export const generateStations: (n: number) => Station[] = (n) => {
@@ -54,7 +54,7 @@ export const generateTickets = (count: number, lines: Line[]) => {
         })
         .toISOString(),
       amount: faker.number.int({ min: 1, max: 5 }),
-      price: faker.number.int({ min: 100, max: 500 }),
+      price: faker.number.int({ min: 10, max: 50 }) * 10,
       payment: ['promptpay', 'creditcard', 'banktransfer'][faker.number.int({ min: 0, max: 2 })],
       status: ['pending', 'paid', 'cancelled'][faker.number.int({ min: 0, max: 2 })],
       createAt: faker.date
@@ -62,7 +62,6 @@ export const generateTickets = (count: number, lines: Line[]) => {
           days: faker.number.int({ min: 1, max: 30 }),
         })
         .toISOString(),
-      readAt: [new Date().toISOString(), undefined][faker.number.int({ min: 0, max: 1 })],
     })
   }
   return data
