@@ -1,67 +1,104 @@
 {
   "translation": {
-    "lang": "th",
-    "warning": {
-      "sorry": "ขออภัย หน้านี้ยังไม่พร้อมใช้งาน",
-      "mobile": "ขออภัย หน้านี้ยังไม่พร้อมใช้งาน กรุณาเข้าใช้งานผ่านคอมพิวเตอร์"
-    },
-    "banner": {
-      "default": "ระบบขนส่งมวลชน",
-      "booking": "ระบบจองตั๋ว"
-    },
-    "navbar": {
-      "homepage": "หน้าหลัก",
-      "mybooking": "ตั๋วของฉัน",
-      "inbox": "กล่องข้อความ",
-      "contactus": "ติดต่อเรา",
-      "helpcenter": "ศูนย์ช่วยเหลือ"
-    },
-    "homepage": {
-      "map": "แผนที่รถไฟฟ้า",
-      "booking": "ซื้อบัตรโดยสาร"
-    },
-    "booking": {
-      "title": "รายละเอียดการจอง",
-      "from": "จาก",
-      "to": "ไป",
-      "date": "วันที่เดินทาง",
-      "amount": "จำนวน",
-      "submit": {
-        "1": "ยืนยันการจอง",
-        "2": "ชำระเงิน",
-        "3": "เสร็จสิ้น"
+    "lang": "en",
+    "misc": {
+      "under_construction": "Sorry, this page is under construction.",
+      "not_supported": "Sorry, this page is not supported on your device.",
+      "not_found": "Sorry, this page is not found.",
+      "no_data": "No data found.",
+      "lines": {
+        "purple": "Purple Line",
+        "blue": "Blue Line",
+        "green": "Green Line",
+        "yellow": "Yellow Line"
       },
-      "unit": {
-        "person": "คน",
-        "baht": "บาท"
-      },
-      "placeholder": "เลือกสถานี",
-      "payment": {
-        "title": "เลือกวิธีการชำระเงิน",
-        "promptpay": "พร้อมเพย์",
-        "creditcard": "บัตรเครดิต",
-        "banktransfer": "โอนผ่านธนาคาร",
-        "truewallet": "ทรูวอลเล็ต"
-      },
-      "completed": "ยืนยันการจองสำเร็จ",
-      "bookingId": "รหัสการจอง",
       "status": {
-        "paid": "ชำระเงินแล้ว",
-        "pending": "รอการชำระเงิน",
-        "cancelled": "ยกเลิกแล้ว",
-        "used": "ใช้งานแล้ว",
-        "expired": "หมดอายุ"
+        "paid": "Paid",
+        "pending": "Pending",
+        "cancelled": "Cancelled"
       }
     },
+    "layout": {
+      "sidebar": {
+        "home_page": "Home",
+        "my_ticket": "My Ticket",
+        "inbox": "Inbox",
+        "contact_us": "Contact Us",
+        "help_center": "Help Center"
+      }
+    },
+    "home_page": {
+      "maps": {
+        "title": "Maps"
+      },
+      "booking": {
+        "title": "Booking",
+        "step": [
+          {
+            "title": "Step 1",
+            "field": {
+              "from": {
+                "label": "Origin",
+                "placeholder": "Select station"
+              },
+              "to": {
+                "label": "Destination",
+                "placeholder": "Select station"
+              },
+              "date": {
+                "label": "Date"
+              },
+              "amount": {
+                "label": "Amount",
+                "unit": "person"
+              },
+              "price": {
+                "unit": "baht"
+              }
+            },
+            "submit": "Next"
+          },
+          {
+            "title": "Step 2",
+            "field": {
+              "payment_method": {
+                "label": "Payment Method",
+                "options": {
+                  "promptpay": "PromptPay",
+                  "creditcard": "Credit Card",
+                  "banktransfer": "Bank Transfer"
+                }
+              }
+            },
+            "submit": "Next"
+          },
+          {
+            "title": "Step 3",
+            "message": ["Booking ID", "Your booking ID is {{booking_id}}", "Please pay within 24 hours"],
+            "qr_code": ["Scan QR Code", "or", "Click button below to pay"],
+            "submit": "Confirm Booking"
+          }
+        ]
+      }
+    },
+    "my_ticket": {
+      "message": [
+        "The booking ID is {{ticketId}}",
+        "Number of {{amount}} seats",
+        "Pay via {{paymentMethod}}",
+        "Departure date "
+      ],
+      "footer": "ราคา {{price}} บาท"
+    },
     "inbox": {
-      "message": "ตั๋วเดินทางจาก {{from}} ไปยัง {{to}} ได้{{status}}"
+      "message": "Your ticket from {{from}} to {{to}} {{action}}",
+      "action": {
+        "pending": "is waiting for payment",
+        "paid": "has been paid",
+        "cancelled": "has been cancelled"
+      }
     },
-    "lines": {
-      "purple": "สายสีม่วง",
-      "blue": "สายสีน้ำเงิน",
-      "green": "สายสีเขียว",
-      "yellow": "สายสีเหลือง"
-    },
-    "myBooking": {}
+    "contact_us": {},
+    "help_center": {}
   }
 }

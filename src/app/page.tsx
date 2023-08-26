@@ -4,36 +4,33 @@ import '../i18n'
 import Booking from '@/components/partials/Booking'
 import Homepage from '@/components/partials/Homepage'
 import Inbox from '@/components/partials/Inbox'
-import MyBooking from '@/components/partials/MyBooking'
-import Sorry from '@/components/partials/Sorry'
+import MyTicket from '@/components/partials/MyTicket'
+import NotFound from '@/components/partials/NotFound'
 import { LayoutContext } from '@/contexts/layout'
 import { useContext } from 'react'
-import { useTranslation } from 'react-i18next'
 
 // CRITICAL: try to use single page application (SPA) instead of multi page application (MPA)
 
 const App = () => {
-  const { t } = useTranslation()
-
-  const { currentState, onChangeState } = useContext(LayoutContext)
+  const { currentState } = useContext(LayoutContext)
 
   switch (currentState) {
-    case 'homepage':
+    case 'home_page':
       return <Homepage />
     case 'map':
-      return <Sorry />
+      return <NotFound type="under_construction" />
     case 'booking':
       return <Booking />
-    case 'mybooking':
-      return <MyBooking />
+    case 'my_ticket':
+      return <MyTicket />
     case 'inbox':
       return <Inbox />
-    case 'contactus':
-      return <Sorry />
-    case 'helpcenter':
-      return <Sorry />
+    case 'contact_us':
+      return <NotFound type="under_construction" />
+    case 'help_center':
+      return <NotFound type="under_construction" />
     default:
-      return <Sorry />
+      return <NotFound />
   }
 }
 

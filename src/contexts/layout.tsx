@@ -1,12 +1,12 @@
 'use client'
 import '../i18n'
-
+import Footer from '@/components/navigations/Footer'
+import Navbar from '@/components/navigations/Navbar'
+import NotSupported from '@/components/navigations/NotSupported'
+import Sidebar from '@/components/navigations/Sidebar'
+import cx from 'classnames'
 import { createContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import cx from 'classnames'
-import Navbar from '@/components/navigations/Navbar'
-import Warning from '@/components/navigations/Warning'
-import Footer from '@/components/navigations/Footer'
 
 interface LayoutContextProps {
   // TODO: add later
@@ -22,7 +22,7 @@ export const LayoutContext = createContext<LayoutContextProps>({
   isMenuOpen: false,
   openMenu: () => {},
   closeMenu: () => {},
-  currentState: 'homepage',
+  currentState: 'home_page',
   onChangeState: () => {},
 })
 
@@ -33,13 +33,26 @@ interface LayoutProviderProps {
 export const LayoutContextProvider: React.FC<LayoutProviderProps> = ({ children }) => {
   const { t } = useTranslation()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [state, setState] = useState('homepage')
+  const [state, setState] = useState('home_page')
 
   const openMenu = () => setIsMenuOpen(true)
   const closeMenu = () => setIsMenuOpen(false)
 
   const onChangeState = (state: string) => {
     setState(state)
+  }
+
+  const getBannerText = () => {
+    switch (state) {
+      case 'my_ticket':
+        return 'my_ticket'
+      case 'inbox':
+        return 'inbox'
+      case 'contact_us':
+        return 'contact_us'
+      default:
+        return 'home_page'
+    }
   }
 
   return (
@@ -51,8 +64,9 @@ export const LayoutContextProvider: React.FC<LayoutProviderProps> = ({ children 
         currentState: state,
         onChangeState,
       }}>
-      <Warning />
+      <NotSupported />
       <Navbar />
+      <Sidebar />
       <div className={cx('font-noto-sans h-screen transition-all duration-500 ease-in-out max-xl:hidden')}>
         <div className="flex h-full flex-col">
           <div className="relative flex h-56 w-full items-center justify-center">
@@ -62,7 +76,7 @@ export const LayoutContextProvider: React.FC<LayoutProviderProps> = ({ children 
                 'absolute inset-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 transition-all duration-500',
                 isMenuOpen ? 'pt-0' : 'pt-10'
               )}>
-              <h1 className="text-6xl text-white shadow-sm">{t('banner.default')}</h1>
+              <h1 className="text-6xl text-white shadow-sm">{t(`layout.sidebar.${getBannerText()}`)}</h1>
             </div>
           </div>
           <div

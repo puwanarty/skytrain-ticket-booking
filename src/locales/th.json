@@ -1,85 +1,104 @@
-// compare with src\locales\en.json
-// this is a copy of en.json, restructuring the json file to make it easier to read and edit
-// {
-//   "translation": {
-//     "lang": "th",
-//     : {
-//       "sorry": "ขออภัย หน้านี้ยังไม่พร้อมใช้งาน",
-//       "mobile": "ขออภัย หน้านี้ยังไม่พร้อมใช้งาน กรุณาเข้าใช้งานผ่านคอมพิวเตอร์"
-//     },
-//     "banner": {
-//       "default": "ระบบขนส่งมวลชน",
-//       "booking": "ระบบจองตั๋ว"
-//     },
-//     "navbar": {
-//       "homepage": "หน้าหลัก",
-//       "mybooking": "ตั๋วของฉัน",
-//       "inbox": "กล่องข้อความ",
-//       "contactus": "ติดต่อเรา",
-//       "helpcenter": "ศูนย์ช่วยเหลือ"
-//     },
-//     "homepage": {
-//       "map": "แผนที่รถไฟฟ้า",
-//       "booking": "ซื้อบัตรโดยสาร"
-//     },
-//     "booking": {
-//       "title": "รายละเอียดการจอง",
-//       "from": "จาก",
-//       "to": "ไป",
-//       "date": "วันที่เดินทาง",
-//       "amount": "จำนวน",
-//       "submit": {
-//         "1": "ยืนยันการจอง",
-//         "2": "ชำระเงิน",
-//         "3": "เสร็จสิ้น"
-//       },
-//       "unit": {
-//         "person": "คน",
-//         "baht": "บาท"
-//       },
-//       "placeholder": "เลือกสถานี",
-//       "payment": {
-//         "title": "เลือกวิธีการชำระเงิน",
-//         "promptpay": "พร้อมเพย์",
-//         "creditcard": "บัตรเครดิต",
-//         "banktransfer": "โอนผ่านธนาคาร",
-//         "truewallet": "ทรูวอลเล็ต"
-//       },
-//       "completed": "ยืนยันการจองสำเร็จ",
-//       "bookingId": "รหัสการจอง",
-//       "status": {
-//         "paid": "ชำระเงินแล้ว",
-//         "pending": "รอการชำระเงิน",
-//         "cancelled": "ยกเลิกแล้ว",
-//         "used": "ใช้งานแล้ว",
-//         "expired": "หมดอายุ"
-//       }
-//     },
-//     "inbox": {
-//       "message": "ตั๋วเดินทางจาก {{from}} ไปยัง {{to}} ได้{{status}}"
-//     },
-//     "lines": {
-//       "purple": "สายสีม่วง",
-//       "blue": "สายสีน้ำเงิน",
-//       "green": "สายสีเขียว",
-//       "yellow": "สายสีเหลือง"
-//     },
-//     "myBooking": {}
-//   }
-// }
-
 {
-	"translation": {
-		"lang": "th",
-		// separate the keys into sections
-		"info": {
-			"under_construction": "ขออภัย หน้านี้ยังไม่พร้อมใช้งาน",
-			"not_supported:": "ขออภัย หน้านี้ยังไม่พร้อมใช้งาน กรุณาเข้าใช้งานผ่านคอมพิวเตอร์"
-		},
-		"layout": {
-			"navbar": {
-				
-			}
-		}
-	}
+  "translation": {
+    "lang": "th",
+    "misc": {
+      "under_construction": "ขออภัยหน้านี้ยังไม่พร้อมใช้งาน",
+      "not_supported": "ขออภัยหน้านี้ยังไม่พร้อมใช้งาน กรุณาเข้าใช้งานผ่านคอมพิวเตอร์",
+      "not_found": "ขออภัยหน้านี้ไม่พบ",
+      "no_data": "ไม่พบข้อมูล",
+      "lines": {
+        "purple": "สายสีม่วง",
+        "blue": "สายสีน้ำเงิน",
+        "green": "สายสีเขียว",
+        "yellow": "สายสีเหลือง"
+      },
+      "status": {
+        "paid": "ชำระเงินแล้ว",
+        "pending": "รอการชำระเงิน",
+        "cancelled": "ยกเลิกการจอง"
+      }
+    },
+    "layout": {
+      "sidebar": {
+        "home_page": "หน้าหลัก",
+        "my_ticket": "ตั๋วของฉัน",
+        "inbox": "กล่องข้อความ",
+        "contact_us": "ติดต่อเรา",
+        "help_center": "ศูนย์ช่วยเหลือ"
+      }
+    },
+    "home_page": {
+      "maps": {
+        "title": "แผนที่รถไฟฟ้า"
+      },
+      "booking": {
+        "title": "ซื้อบัตรโดยสาร",
+        "step": [
+          {
+            "title": "ขั้นตอนที่ 1",
+            "field": {
+              "from": {
+                "label": "จาก",
+                "placeholder": "เลือกสถานี"
+              },
+              "to": {
+                "label": "ไป",
+                "placeholder": "เลือกสถานี"
+              },
+              "date": {
+                "label": "วันที่เดินทาง"
+              },
+              "amount": {
+                "label": "จำนวน",
+                "unit": "คน"
+              },
+              "price": {
+                "unit": "บาท"
+              }
+            },
+            "submit": "ต่อไป"
+          },
+          {
+            "title": "ขั้นตอนที่ 2",
+            "field": {
+              "payment_method": {
+                "label": "เลือกวิธีการชำระเงิน",
+                "options": {
+                  "promptpay": "พร้อมเพย์",
+                  "creditcard": "บัตรเครดิต",
+                  "banktransfer": "โอนผ่านธนาคาร"
+                }
+              }
+            },
+            "submit": "ต่อไป"
+          },
+          {
+            "title": "ขั้นตอนที่ 3",
+            "message": ["ยืนยันการจองสำเร็จ", "รหัสการจองของคุณคือ {{bookingId}}", "กรุณาชำระเงินภายใน 24 ชั่วโมง"],
+            "qr_code": ["สแกน QR Code ชำระเงิน", "หรือ", "กดปุ่มด้านล่างเพื่อชำระเงิน"],
+            "submit": "ยืนยันการจอง"
+          }
+        ]
+      }
+    },
+    "my_ticket": {
+      "message": [
+        "หมายเลขการจอง {{ticketId}}",
+        "จำนวน {{amount}} ที่นั่ง",
+        "ชำระเงินโดย {{paymentMethod}}",
+        "วันที่เดินทาง "
+      ],
+      "footer": "ราคา {{price}} บาท"
+    },
+    "inbox": {
+      "message": "ตั๋วของคุณที่เดินทางจาก {{from}} ไปยัง {{to}} {{action}}",
+      "action": {
+        "pending": "กำลังรอการชำระเงิน",
+        "paid": "ได้ชำระเงินแล้ว",
+        "cancelled": "ได้ยกเลิกการจองแล้ว"
+      }
+    },
+    "contact_us": {},
+    "help_center": {}
+  }
 }

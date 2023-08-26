@@ -9,34 +9,6 @@ const TicketDetail: React.FC<{ ticket?: Ticket; isFull?: boolean }> = ({ ticket,
   const { t } = useTranslation()
   const { getOneStation } = useContext(DataContext)
 
-  const getStatus = (date: string, status: string) => {
-    if (new Date(date).getDate() < new Date().getDate()) {
-      if (status === 'paid') {
-        return 'used'
-      }
-      if (status === 'pending') {
-        return 'expired'
-      }
-      return status
-    }
-    return status
-  }
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'pending':
-        return 'bg-yellow-500'
-      case 'paid':
-        return 'bg-green-500'
-      case 'expired':
-        return 'bg-red-500'
-      case 'used':
-        return 'bg-blue-500'
-      default:
-        return 'bg-gray-500'
-    }
-  }
-
   return (
     ticket && (
       <>
@@ -48,10 +20,26 @@ const TicketDetail: React.FC<{ ticket?: Ticket; isFull?: boolean }> = ({ ticket,
         </div>
         <div className={cx('flex w-full', isFull ? 'justify-evenly' : 'justify-center')}>
           <div className="flex flex-col items-center justify-center gap-2 p-2 text-gray-500">
-            {isFull && <span>{`หมายเลขการจอง ${ticket.id}`}</span>}
-            <span>{`จำนวน ${ticket.amount} ที่นั่ง`}</span>
-            {isFull && <span>{`ชำระโดย ${t(`booking.payment.${ticket.payment}`)}`}</span>}
-            <span>{`วันที่เดินทาง ${new Date(ticket.date).toLocaleDateString()}`}</span>
+            {isFull && (
+              <span>
+                {t('my_ticket.message.0', {
+                  ticketId: ticket.id,
+                })}
+              </span>
+            )}
+            <span>
+              {t('my_ticket.message.1', {
+                amount: ticket.amount,
+              })}
+            </span>
+            {isFull && (
+              <span>
+                {t('my_ticket.message.2', {
+                  paymentMethod: t(`home_page.booking.step.1.field.payment_method.options.${ticket.payment}`),
+                })}
+              </span>
+            )}
+            <span>{t('my_ticket.message.3') + new Date(ticket.date).toLocaleDateString()}</span>
           </div>
           {isFull && (
             <div className="flex flex-col items-center justify-center gap-2 p-2 text-gray-500">
@@ -60,8 +48,12 @@ const TicketDetail: React.FC<{ ticket?: Ticket; isFull?: boolean }> = ({ ticket,
           )}
         </div>
         <div className={cx('flex w-full items-center justify-between bg-blue-800 p-2', isFull ? 'text-sm' : 'text-xs')}>
-          <span className={cx('rounded-full px-2', getStatusColor(getStatus(ticket.date, ticket.status)))}>
-            {t(`booking.status.${getStatus(ticket.date, ticket.status)}`)}
+          <span
+            className={cx(
+              'rounded-full px-2',
+              ticket.status === 'pending' ? 'bg-yellow-500' : ticket.status === 'paid' ? 'bg-green-500' : 'bg-gray-500'
+            )}>
+            {t(`misc.status.${ticket.status}`)}
           </span>
           <span>{`ราคา ${ticket.price} บาท`}</span>
         </div>
@@ -70,12 +62,11 @@ const TicketDetail: React.FC<{ ticket?: Ticket; isFull?: boolean }> = ({ ticket,
   )
 }
 
-const MyBooking = () => {
+const MyTicket = () => {
   const { getAllTicket } = useContext(DataContext)
   const [isOpen, setIsOpen] = useState(false)
   const [ticket, setTicket] = useState<Ticket>()
 
-  // newest ticket first
   const tickets = getAllTicket().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
   const onOpen = (id: string) => {
@@ -112,4 +103,4 @@ const MyBooking = () => {
   )
 }
 
-export default MyBooking
+export default MyTicket

@@ -1,4 +1,4 @@
-import Button from '../buttons/Button'
+import Button from '@/components/buttons/Button'
 import { Line, Station } from '@/types/dto'
 import cx from 'classnames'
 import { useEffect, useState } from 'react'
@@ -63,7 +63,7 @@ const Select: React.FC<SelectProps> = ({ label, placeholder, options, value, onC
                   'font-bold': selected === index,
                 })}
                 onClick={() => setSelected(index)}>
-                {t(`lines.${item.name}`)}
+                {t(`misc.lines.${item.name}`)}
               </Button>
             ))}
           </div>

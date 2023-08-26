@@ -61,7 +61,7 @@ const Booking: React.FC<BookingProps> = () => {
         createAt: new Date().toISOString(),
       } as Ticket
       addTicket(dto)
-      onChangeState('homepage')
+      onChangeState('home_page')
     }
     setStep(s + 1)
   }
@@ -115,16 +115,16 @@ const Booking: React.FC<BookingProps> = () => {
           ))}
         </div>
       </div>
-      <TicketLayout title={t('booking.title')}>
+      <TicketLayout title={t(`home_page.booking.step.${step - 1}.title`)}>
         {step === 1 && (
           <div className="flex h-full flex-1 flex-col gap-8">
             <div className="flex flex-1 gap-10">
               <div className="flex flex-1 flex-col justify-evenly gap-4">
                 <div className="flex h-1/2 items-center gap-8">
                   <FormControl>
-                    <span className="w-6">{t('booking.from')}</span>
+                    <span className="w-6">{t('home_page.booking.step.0.field.from.label')}</span>
                     <Select
-                      placeholder={t('booking.placeholder')}
+                      placeholder={t('home_page.booking.step.0.field.from.placeholder')}
                       options={lines}
                       onChange={(id) => setFrom(id)}
                       value={from}
@@ -134,7 +134,7 @@ const Booking: React.FC<BookingProps> = () => {
                 </div>
                 <div className="flex h-1/2 items-center gap-8">
                   <FormControl>
-                    <span>{t('booking.date')}</span>
+                    <span>{t('home_page.booking.step.0.field.date.label')}</span>
                     <Datepicker value={date} onChange={(date) => setDate(new Date(date).toISOString())} />
                     <FaCalendarCheck className="h-6 w-6 text-gray-500" />
                   </FormControl>
@@ -150,9 +150,9 @@ const Booking: React.FC<BookingProps> = () => {
               <div className="flex flex-1 flex-col items-center justify-evenly gap-4">
                 <div className="flex h-1/2 w-full items-center gap-8">
                   <FormControl>
-                    <span className="w-6">{t('booking.to')}</span>
+                    <span className="w-6">{t('home_page.booking.step.0.field.to.label')}</span>
                     <Select
-                      placeholder={t('booking.placeholder')}
+                      placeholder={t('home_page.booking.step.0.field.to.placeholder')}
                       options={lines}
                       onChange={(id) => setTo(id)}
                       value={to}
@@ -162,7 +162,7 @@ const Booking: React.FC<BookingProps> = () => {
                 </div>
                 <div className="flex h-1/2 w-full items-center gap-8">
                   <FormControl>
-                    <span>{t('booking.amount')}</span>
+                    <span>{t('home_page.booking.step.0.field.amount.label')}</span>
                     <button
                       onClick={() => {
                         if (amount > 1) {
@@ -181,7 +181,7 @@ const Booking: React.FC<BookingProps> = () => {
               </div>
             </div>
             <Button disabled={from === '' || to === ''} onClick={() => onSubmitStep(1)}>
-              {t('booking.submit.1')}
+              {t('home_page.booking.step.0.submit')}
             </Button>
           </div>
         )}
@@ -204,16 +204,16 @@ const Booking: React.FC<BookingProps> = () => {
                 <div className="flex items-center justify-between gap-6">
                   <FaUserAlt className="h-6 w-6 text-blue-800" />
                   <span>{amount}</span>
-                  <span className="w-10 text-center">{t('booking.unit.person')}</span>
+                  <span className="w-10 text-center">{t('home_page.booking.step.0.field.amount.unit')}</span>
                 </div>
                 <div className="flex items-center justify-between gap-6">
                   <FaCoins className="h-6 w-6 text-blue-800" />
                   <span>{amount * 50}</span>
-                  <span className="w-10 text-center">{t('booking.unit.baht')}</span>
+                  <span className="w-10 text-center">{t('home_page.booking.step.0.field.price.unit')}</span>
                 </div>
               </div>
               <div className="flex flex-1 flex-col items-center justify-evenly gap-2 font-bold">
-                <span>{t('booking.payment.title')}</span>
+                <span>{t('home_page.booking.step.1.field.payment_method.label')}</span>
                 {['promptpay', 'creditcard', 'banktransfer'].map((item, index) => (
                   <button
                     key={index}
@@ -223,7 +223,7 @@ const Booking: React.FC<BookingProps> = () => {
                       <div className="flex w-3/4">
                         <div className="w-1/5">{getIcon(item)}</div>
                         <span className={cx('flex-1', item === payment ? 'font-bold text-blue-800' : 'font-normal')}>
-                          {t(`booking.payment.${item}`)}
+                          {t(`home_page.booking.step.1.field.payment_method.options.${item}`)}
                         </span>
                       </div>
                     </div>
@@ -232,7 +232,7 @@ const Booking: React.FC<BookingProps> = () => {
               </div>
             </div>
             <Button disabled={payment === ''} onClick={() => onSubmitStep(2)}>
-              {t('booking.submit.2')}
+              {t('home_page.booking.step.1.submit')}
             </Button>
           </div>
         )}
@@ -240,17 +240,16 @@ const Booking: React.FC<BookingProps> = () => {
           <div className="flex h-full flex-1 flex-col justify-center gap-8">
             <div className="flex flex-1 gap-8 text-lg">
               <div className="flex flex-1 flex-col items-center justify-evenly font-bold">
-                <span>{t('booking.completed')}</span>
-                <span>
-                  {t('booking.bookingId')} {ticketId}
-                </span>
+                <span>{t('home_page.booking.step.2.message.0')}</span>
+                <span>{t('home_page.booking.step.2.message.1', { bookingId: ticketId })}</span>
+                <span>{t('home_page.booking.step.2.message.2')}</span>
               </div>
               <div className="flex flex-1 flex-col items-center justify-evenly font-bold">
                 <img className="h-full rounded-lg object-cover" src={'/qr-code.png'} alt="qr-code" />
               </div>
             </div>
             <Button disabled={payment === ''} onClick={() => onSubmitStep(3)}>
-              {t('booking.submit.3')}
+              {t('home_page.booking.step.2.submit')}
             </Button>
           </div>
         )}
