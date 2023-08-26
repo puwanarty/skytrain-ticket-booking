@@ -2,6 +2,7 @@
 import '../i18n'
 
 import Booking from '@/components/partials/Booking'
+import ContractUs from '@/components/partials/ContractUs'
 import Homepage from '@/components/partials/Homepage'
 import Inbox from '@/components/partials/Inbox'
 import MyTicket from '@/components/partials/MyTicket'
@@ -26,7 +27,7 @@ const App = () => {
     case 'inbox':
       return <Inbox />
     case 'contact_us':
-      return <NotFound type="under_construction" />
+      return <ContractUs />
     case 'help_center':
       return <NotFound type="under_construction" />
     default:

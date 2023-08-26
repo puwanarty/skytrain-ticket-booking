@@ -98,7 +98,24 @@
         "cancelled": "has been cancelled"
       }
     },
-    "contact_us": {},
+    "contact_us": {
+      "title": "Contact Us",
+      "field": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter your name"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Enter your email"
+        },
+        "message": {
+          "label": "Message",
+          "placeholder": "Enter your message"
+        }
+      },
+      "submit": "Send"
+    },
     "help_center": {}
   }
 }

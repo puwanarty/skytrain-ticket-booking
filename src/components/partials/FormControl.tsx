@@ -1,11 +1,9 @@
 interface FormControlProps {
-  label?: string
   children: React.ReactNode
 }
 
-const FormControl: React.FC<FormControlProps> = ({ label, children }) => (
-  <div className="flex flex-1 flex-col text-xl">
-    <span className="text-2xl">{label}</span>
+const FormControl: React.FC<FormControlProps> = ({ children }) => (
+  <div className="flex flex-1 items-center justify-between border-b border-gray-500 hover:border-blue-500">
     {children}
   </div>
 )

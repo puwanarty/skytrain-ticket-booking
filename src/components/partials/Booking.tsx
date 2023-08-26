@@ -1,6 +1,7 @@
 import Button from '@/components/buttons/Button'
 import Datepicker from '@/components/inputs/Datepicker'
 import Select from '@/components/inputs/Select'
+import FormControl from '@/components/partials/FormControl'
 import TicketLayout from '@/components/partials/TicketLayout'
 import { DataContext } from '@/contexts/data'
 import { LayoutContext } from '@/contexts/layout'
@@ -24,12 +25,6 @@ import {
   TrainSvg,
   UsersGroupSvg,
 } from '@/components/svg'
-
-const FormControl: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div className="flex flex-1 items-center justify-between border-b border-gray-500 hover:border-blue-500">
-    {children}
-  </div>
-)
 
 interface BookingProps {}
 

@@ -98,7 +98,24 @@
         "cancelled": "ได้ยกเลิกการจองแล้ว"
       }
     },
-    "contact_us": {},
+    "contact_us": {
+      "title": "ติดต่อเรา",
+      "field": {
+        "name": {
+          "label": "ชื่อ",
+          "placeholder": "กรอกชื่อของคุณ"
+        },
+        "email": {
+          "label": "อีเมล",
+          "placeholder": "กรอกอีเมลของคุณ"
+        },
+        "message": {
+          "label": "ข้อความ",
+          "placeholder": "กรอกข้อความของคุณ"
+        }
+      },
+      "submit": "ส่งข้อความ"
+    },
     "help_center": {}
   }
 }
