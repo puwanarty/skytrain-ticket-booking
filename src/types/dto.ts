@@ -19,5 +19,13 @@ export type Ticket = {
   payment: string // payment id
   status: string // enum: pending, paid, cancelled
   createAt: string // ISO 8601
-  readAt?: string // ISO 8601
+}
+
+export type History = {
+  id: string
+  ticketId: string
+  oldStatus?: string
+  newStatus: string
+  createAt: string
+  readAt?: string
 }

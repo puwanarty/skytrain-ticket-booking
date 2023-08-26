@@ -1,6 +1,6 @@
 'use client'
-import { Line, Station, Ticket } from '@/types/dto'
-import { generateLines, generateTickets } from '@/utils/data'
+import { History, Line, Station, Ticket } from '@/types/dto'
+import { generateLines, generateTickets, uuid } from '@/utils/data'
 import { createContext, useEffect, useState } from 'react'
 
 interface DataContextProps {
@@ -12,6 +12,8 @@ interface DataContextProps {
   addTicket: (ticket: Ticket) => void
   removeTicket: (ticket: Ticket) => void
   updateTicket: (ticket: Ticket) => void
+  getAllHistory: () => History[]
+  updateHistory: (history: History) => void
 }
 
 export const DataContext = createContext<DataContextProps>({
@@ -23,6 +25,8 @@ export const DataContext = createContext<DataContextProps>({
   addTicket: () => {},
   removeTicket: () => {},
   updateTicket: () => {},
+  getAllHistory: () => [],
+  updateHistory: () => {},
 })
 
 interface DataProviderProps {
@@ -32,6 +36,7 @@ interface DataProviderProps {
 export const DataContextProvider: React.FC<DataProviderProps> = ({ children }) => {
   const [lines, setLines] = useState<Line[]>([])
   const [tickets, setTickets] = useState<Ticket[]>([])
+  const [histories, setHistories] = useState<History[]>([])
 
   const getAllLine = () => {
     return lines
@@ -53,6 +58,15 @@ export const DataContextProvider: React.FC<DataProviderProps> = ({ children }) =
   }
 
   const addTicket = (ticket: Ticket) => {
+    const history = {
+      id: uuid(),
+      ticketId: ticket.id,
+      oldStatus: '',
+      newStatus: ticket.status,
+      createAt: new Date().toISOString(),
+    } as History
+
+    setHistories([...histories, history])
     setTickets([...tickets, ticket])
   }
 
@@ -61,7 +75,28 @@ export const DataContextProvider: React.FC<DataProviderProps> = ({ children }) =
   }
 
   const updateTicket = (ticket: Ticket) => {
+    const target = tickets.find((item) => item.id === ticket.id)
+
+    if (target && target.status !== ticket.status) {
+      const history = {
+        id: uuid(),
+        ticketId: ticket.id,
+        oldStatus: target.status,
+        newStatus: ticket.status,
+        createAt: new Date().toISOString(),
+      } as History
+      setHistories([...histories, history])
+    }
+
     setTickets(tickets.map((item) => (item.id === ticket.id ? ticket : item)))
+  }
+
+  const getAllHistory = () => {
+    return histories
+  }
+
+  const updateHistory = (history: History) => {
+    setHistories(histories.map((item) => (item.id === history.id ? history : item)))
   }
 
   useEffect(() => {
@@ -83,6 +118,8 @@ export const DataContextProvider: React.FC<DataProviderProps> = ({ children }) =
         addTicket,
         removeTicket,
         updateTicket,
+        getAllHistory,
+        updateHistory,
       }}>
       {children}
     </DataContext.Provider>

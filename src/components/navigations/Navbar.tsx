@@ -17,9 +17,9 @@ interface NavbarProps {}
 export const Navbar: React.FC<NavbarProps> = () => {
   const { t } = useTranslation()
   const { isMenuOpen, openMenu, closeMenu, onChangeState } = useContext(LayoutContext)
-  const { getAllTicket } = useContext(DataContext)
+  const { getAllHistory } = useContext(DataContext)
 
-  const tickets = getAllTicket()
+  const histories = getAllHistory()
 
   const getIcon = (path: string) => {
     switch (path) {
@@ -74,9 +74,9 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 <div className="flex items-center gap-4">
                   {getIcon(item)}
                   <span className="text-xl">{t(`navbar.${item}`)}</span>
-                  {item === 'inbox' && tickets.filter((ticket) => !ticket.readAt).length > 0 && (
+                  {item === 'inbox' && histories.filter((ticket) => !ticket.readAt).length > 0 && (
                     <div className="flex h-4 w-4 items-center justify-center rounded-full bg-red-500">
-                      <span className="text-xs text-white">{tickets.filter((ticket) => !ticket.readAt).length}</span>
+                      <span className="text-xs text-white">{histories.filter((ticket) => !ticket.readAt).length}</span>
                     </div>
                   )}
                 </div>

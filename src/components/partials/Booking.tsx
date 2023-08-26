@@ -57,7 +57,7 @@ const Booking: React.FC<BookingProps> = () => {
         amount,
         payment,
         price: amount * 50,
-        status: 'paid',
+        status: 'pending',
         createAt: new Date().toISOString(),
       } as Ticket
       addTicket(dto)
