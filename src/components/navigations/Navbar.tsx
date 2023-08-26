@@ -1,6 +1,5 @@
+import { MenuSvg, TicketSvg } from '@/components/svg'
 import { LayoutContext } from '@/contexts/layout'
-import { FaBars } from '@react-icons/all-files/fa/FaBars'
-import { FaTicketAlt } from '@react-icons/all-files/fa/FaTicketAlt'
 import cx from 'classnames'
 import { useContext } from 'react'
 
@@ -17,10 +16,10 @@ export const Navbar: React.FC<NavbarProps> = () => {
           isMenuOpen && '-translate-y-10 opacity-0'
         )}>
         <button onClick={openMenu}>
-          <FaBars className={cx('h-6 w-6 text-blue-800')} />
+          <MenuSvg className="h-8 w-8 text-blue-800" />
         </button>
         <button onClick={() => onChangeState('home_page')}>
-          <FaTicketAlt className="h-8 w-8 text-blue-800 transition-all duration-200 hover:scale-125" />
+          <TicketSvg className="h-8 w-8 text-blue-800 transition-all duration-200 hover:scale-125" />
         </button>
       </div>
     </>

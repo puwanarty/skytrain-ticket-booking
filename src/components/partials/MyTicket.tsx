@@ -1,6 +1,6 @@
+import { ArrowNarrowRightSvg } from '@/components/svg'
 import { DataContext } from '@/contexts/data'
 import { Ticket } from '@/types/dto'
-import { FaLongArrowAltRight } from '@react-icons/all-files/fa/FaLongArrowAltRight'
 import cx from 'classnames'
 import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -15,7 +15,7 @@ const TicketDetail: React.FC<{ ticket?: Ticket; isFull?: boolean }> = ({ ticket,
         <div
           className={cx('flex w-full items-center justify-center bg-blue-800 p-4', isFull ? 'text-lg' : 'text-base')}>
           <span className="line-clamp-1">{getOneStation(ticket.from)?.name}</span>
-          <FaLongArrowAltRight className="mx-2" />
+          <ArrowNarrowRightSvg className="mx-2" />
           <span className="line-clamp-1">{getOneStation(ticket.to)?.name}</span>
         </div>
         <div className={cx('flex w-full', isFull ? 'justify-evenly' : 'justify-center')}>
@@ -43,7 +43,7 @@ const TicketDetail: React.FC<{ ticket?: Ticket; isFull?: boolean }> = ({ ticket,
           </div>
           {isFull && (
             <div className="flex flex-col items-center justify-center gap-2 p-2 text-gray-500">
-              <img src="/qr-code.png" className="h-32 w-32" />
+              <img src="/qr-code.png" className="h-32 w-32" alt="qr-code" />
             </div>
           )}
         </div>

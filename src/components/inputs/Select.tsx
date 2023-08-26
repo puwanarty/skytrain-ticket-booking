@@ -1,9 +1,9 @@
 import Button from '@/components/buttons/Button'
+import { CheckSvg } from '@/components/svg'
 import { Line, Station } from '@/types/dto'
 import cx from 'classnames'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FaCheck } from 'react-icons/fa6'
 
 interface SelectProps {
   label?: string
@@ -25,12 +25,12 @@ const Select: React.FC<SelectProps> = ({ label, placeholder, options, value, onC
     if (index > -1) {
       setSelected(index)
     }
-  }, [value])
+  }, [value, options])
 
   useEffect(() => {
     const station = options.flatMap((item) => item.stations).find((item) => item.id === value)
     setDisplayValue(station)
-  }, [value])
+  }, [value, options])
 
   return (
     <div>
@@ -80,8 +80,8 @@ const Select: React.FC<SelectProps> = ({ label, placeholder, options, value, onC
                     setIsOptionsOpen(false)
                   }}>
                   <div className="flex justify-between">
-                    <span className="line-clamp-1 w-full">{item.name}</span>
-                    {item.id === value && <FaCheck className="h-6 w-6 text-blue-800" />}
+                    <span className="line-clamp-1">{item.name}</span>
+                    {item.id === value && <CheckSvg className="text-blue-800" />}
                   </div>
                 </button>
               </div>

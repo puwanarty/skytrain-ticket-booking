@@ -1,10 +1,6 @@
+import { HomeSvg, InboxSvg, InfoCircleSvg, PhoneSvg, TicketSvg } from '@/components/svg'
 import { DataContext } from '@/contexts/data'
 import { LayoutContext } from '@/contexts/layout'
-import { FaHome } from '@react-icons/all-files/fa/FaHome'
-import { FaInbox } from '@react-icons/all-files/fa/FaInbox'
-import { FaInfoCircle } from '@react-icons/all-files/fa/FaInfoCircle'
-import { FaPhoneAlt } from '@react-icons/all-files/fa/FaPhoneAlt'
-import { FaTicketAlt } from '@react-icons/all-files/fa/FaTicketAlt'
 import cx from 'classnames'
 import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -19,15 +15,15 @@ const Sidebar = () => {
   const getIcon = (path: string) => {
     switch (path) {
       case 'my_ticket':
-        return <FaTicketAlt className="h-10 w-10" />
+        return <TicketSvg className="h-10 w-10" />
       case 'inbox':
-        return <FaInbox className="h-10 w-10" />
+        return <InboxSvg className="h-10 w-10" />
       case 'contact_us':
-        return <FaPhoneAlt className="h-10 w-10" />
+        return <PhoneSvg className="h-10 w-10" />
       case 'help_center':
-        return <FaInfoCircle className="h-10 w-10" />
+        return <InfoCircleSvg className="h-10 w-10" />
       default:
-        return <FaHome className="h-10 w-10" />
+        return <HomeSvg className="h-10 w-10" />
     }
   }
 

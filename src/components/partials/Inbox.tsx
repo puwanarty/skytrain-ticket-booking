@@ -1,9 +1,8 @@
+import NotFound from '@/components/partials/NotFound'
 import { DataContext } from '@/contexts/data'
-import { FaExclamation } from '@react-icons/all-files/fa/FaExclamation'
 import cx from 'classnames'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Sorry from './NotFound'
 
 interface InboxProps {}
 
@@ -58,21 +57,13 @@ const Inbox: React.FC<InboxProps> = () => {
                       action: t(`inbox.action.${item.newStatus}`),
                     })}
                   </div>
-                  <div className="flex items-center">
-                    <FaExclamation
-                      className={cx(
-                        'h-4 w-4 text-red-500 transition-all duration-500',
-                        item.readAt ? 'translate-x-full opacity-0' : 'translate-x-0 opacity-100'
-                      )}
-                    />
-                  </div>
                 </div>
               </button>
             )
           )
         })
       ) : (
-        <Sorry type="no_data" />
+        <NotFound type="no_data" />
       )}
     </div>
   )
