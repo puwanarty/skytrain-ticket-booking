@@ -88,6 +88,13 @@
         "Pay via {{paymentMethod}}",
         "Departure date "
       ],
+      "test": {
+        "label": "Click status to change ticket status (for testing)",
+        "button": {
+          "paid": "Paid",
+          "cancelled": "Cancelled"
+        }
+      },
       "footer": "ราคา {{price}} บาท"
     },
     "inbox": {

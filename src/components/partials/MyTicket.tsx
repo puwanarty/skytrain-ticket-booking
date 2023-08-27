@@ -1,13 +1,20 @@
 import { ArrowNarrowRightSvg } from '@/components/svg'
 import { DataContext } from '@/contexts/data'
 import { Ticket } from '@/types/dto'
+import { isExpired } from '@/utils/date'
 import cx from 'classnames'
 import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-const TicketDetail: React.FC<{ ticket?: Ticket; isFull?: boolean }> = ({ ticket, isFull }) => {
+interface TicketDetailProps {
+  ticket?: Ticket
+  isFull?: boolean
+  onClose: () => void
+}
+
+const TicketDetail: React.FC<TicketDetailProps> = ({ ticket, isFull, onClose }) => {
   const { t } = useTranslation()
-  const { getOneStation } = useContext(DataContext)
+  const { getOneStation, updateTicket } = useContext(DataContext)
 
   return (
     ticket && (
@@ -44,6 +51,37 @@ const TicketDetail: React.FC<{ ticket?: Ticket; isFull?: boolean }> = ({ ticket,
           {isFull && (
             <div className="flex flex-col items-center justify-center gap-2 p-2 text-gray-500">
               <img src="/qr-code.png" className="h-32 w-32" alt="qr-code" />
+              <div className="flex gap-2">
+                {ticket.status === 'pending' && (
+                  <button
+                    className="rounded-full bg-green-500 px-2 text-sm text-white"
+                    onClick={() => {
+                      updateTicket({
+                        ...ticket,
+                        status: 'paid',
+                      })
+                      onClose()
+                    }}>
+                    {t('my_ticket.test.button.paid')}
+                  </button>
+                )}
+                {ticket.status === 'pending' && (
+                  <button
+                    className="rounded-full bg-gray-500 px-2 text-sm text-white"
+                    onClick={() => {
+                      updateTicket({
+                        ...ticket,
+                        status: 'cancelled',
+                      })
+                      onClose()
+                    }}>
+                    {t('my_ticket.test.button.cancelled')}
+                  </button>
+                )}
+              </div>
+              {ticket.status === 'pending' && (
+                <span className="text-xs text-gray-400">{t('my_ticket.test.label')}</span>
+              )}
             </div>
           )}
         </div>
@@ -75,6 +113,10 @@ const MyTicket = () => {
     setIsOpen(true)
   }
 
+  const onClose = () => {
+    setIsOpen(false)
+  }
+
   return (
     <React.Fragment>
       <div
@@ -86,16 +128,17 @@ const MyTicket = () => {
         <div
           className="flex w-2/5 flex-col items-center justify-center overflow-hidden rounded-lg bg-gray-300 shadow-lg"
           onClick={(e) => e.stopPropagation()}>
-          <TicketDetail ticket={ticket} isFull />
+          <TicketDetail ticket={ticket} isFull onClose={onClose} />
         </div>
       </div>
       <div className="grid grid-cols-4 items-center justify-center gap-4">
         {tickets.map((item, index) => (
           <button
             key={index}
+            disabled={isExpired(new Date(item.date))}
             onClick={() => onOpen(item.id)}
-            className="flex flex-col items-center justify-center overflow-hidden rounded-lg bg-gray-300 shadow-lg transition-all duration-200 hover:scale-105">
-            <TicketDetail ticket={item} />
+            className="flex flex-col items-center justify-center overflow-hidden rounded-lg bg-gray-300 shadow-lg transition-all duration-200 hover:scale-105 disabled:opacity-50">
+            <TicketDetail ticket={item} onClose={onClose} />
           </button>
         ))}
       </div>
