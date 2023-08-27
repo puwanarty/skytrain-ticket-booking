@@ -7,6 +7,7 @@ import { DataContext } from '@/contexts/data'
 import { LayoutContext } from '@/contexts/layout'
 import { Ticket } from '@/types/dto'
 import { uuid } from '@/utils/data'
+import { formatDate } from '@/utils/date'
 import cx from 'classnames'
 import React from 'react'
 import { useContext, useState } from 'react'
@@ -195,7 +196,7 @@ const Booking: React.FC<BookingProps> = () => {
                 </div>
                 <div className="flex items-center justify-between gap-6">
                   <CalendarSvg className="h-6 w-6 text-blue-800" />
-                  <span>{new Date(date).toLocaleDateString()}</span>
+                  <span>{formatDate(date)}</span>
                   <span className="w-10" />
                 </div>
                 <div className="flex items-center justify-between gap-6">

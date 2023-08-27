@@ -1,3 +1,4 @@
+import { formatDate } from '@/utils/date'
 import { forwardRef, HTMLProps } from 'react'
 import ReactDatePicker from 'react-datepicker'
 
@@ -10,7 +11,7 @@ const CustomDatePicker = forwardRef<HTMLButtonElement, HTMLProps<HTMLButtonEleme
   ({ value, disabled, onClick }, ref) => {
     return (
       <button className="h-full text-black" ref={ref} disabled={disabled} onClick={onClick}>
-        <div className="flex items-center justify-between">{value}</div>
+        <div className="flex items-center justify-between">{value && formatDate(value.toString())}</div>
       </button>
     )
   }
@@ -27,7 +28,7 @@ const Datepicker: React.FC<DatepickerProps> = ({ value, onChange }) => {
         minDate={new Date()}
         onChange={(date) => {
           if (date) {
-            onChange(date.toISOString().split('T')[0])
+            onChange(date.toISOString())
           }
         }}
       />

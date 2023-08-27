@@ -1,8 +1,9 @@
 import { ArrowNarrowRightSvg } from '@/components/svg'
 import { DataContext } from '@/contexts/data'
 import { Ticket } from '@/types/dto'
-import { isExpired } from '@/utils/date'
+import { formatDate, isExpired } from '@/utils/date'
 import cx from 'classnames'
+import { compareDesc } from 'date-fns'
 import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -46,7 +47,7 @@ const TicketDetail: React.FC<TicketDetailProps> = ({ ticket, isFull, onClose }) 
                 })}
               </span>
             )}
-            <span>{t('my_ticket.message.3') + new Date(ticket.date).toLocaleDateString()}</span>
+            <span>{t('my_ticket.message.3') + ' ' + formatDate(ticket.date)}</span>
           </div>
           {isFull && (
             <div className="flex flex-col items-center justify-center gap-2 p-2 text-gray-500">
@@ -105,7 +106,7 @@ const MyTicket = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [ticket, setTicket] = useState<Ticket>()
 
-  const tickets = getAllTicket().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  const tickets = getAllTicket().sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
 
   const onOpen = (id: string) => {
     const ticket = tickets.find((item) => item.id === id)
