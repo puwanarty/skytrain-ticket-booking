@@ -1,34 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Skytrain Ticket Booking
+
+This is a simple ticket booking system for the skytrain.
+
+## Description
+
+This is a simple ticket booking system for the skytrain. It allows users to book tickets for the skytrain. It also allows users to view their bookings and cancel them if they wish to do so.
+
+_This project is inspired by final project of 4th semester of BSc. Computer Science Course._
 
 ## Getting Started
 
-First, run the development server:
+### Dependencies
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+- Node.js
+
+### Installing
+
+- Download the project or clone it using git
+- Open the project in your favourite IDE (I used VS Code)
+
+### Executing program
+
+```
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Project will be running on <http://localhost:3000>
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Help
 
-## Learn More
+This project is still in development. If you find any bugs or issues, please feel free to open an issue.
 
-To learn more about Next.js, take a look at the following resources:
+## Authors
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [@puwanarty](https://github.com/puwanarty)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Version History
 
-## Deploy on Vercel
+- 0.3.0
+  - Added a contract us page
+  - Added svg icons for better performance and accessibility
+  - Various bug fixes and optimizations
+  - See [commit change](https://github.com/puwanarty/skytrain-ticket-booking/commits/v0.3.0) or See [release history](https://github.com/puwanarty/skytrain-ticket-booking/tags)
+- 0.2.0
+  - Added a new feature to view notifications
+  - Various bug fixes and optimizations
+  - See [commit change](https://github.com/puwanarty/skytrain-ticket-booking/commits/v0.2.0) or See [release history](https://github.com/puwanarty/skytrain-ticket-booking/tags)
+- 0.1.0
+  - Initial Release
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This project has no license.
