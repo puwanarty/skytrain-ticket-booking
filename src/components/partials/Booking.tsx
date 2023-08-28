@@ -17,7 +17,6 @@ import {
   BrandMastercardSvg,
   BuildingBankSvg,
   CalendarSvg,
-  CoinBitcoinSvg,
   CoinSvg,
   QrcodeSvg,
   ReloadSvg,
@@ -88,8 +87,6 @@ const Booking: React.FC<BookingProps> = () => {
 
   const getIcon = (id: string) => {
     switch (id) {
-      case 'crypto':
-        return <CoinBitcoinSvg className="h-6 w-6 text-blue-800" />
       case 'promptpay':
         return <QrcodeSvg className="h-6 w-6 text-blue-800" />
       case 'creditcard':
