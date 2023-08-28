@@ -9,28 +9,23 @@ interface SelectProps {
   label?: string
   placeholder?: string
   options: Line[]
-  value: string
-  onChange: (id: string) => void
+  value?: Station
+  onChange: (value: Station) => void
 }
 
 const Select: React.FC<SelectProps> = ({ label, placeholder, options, value, onChange }) => {
-  const { t } = useTranslation()
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation()
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
-  const [selected, setSelected] = useState(0)
-
-  const [displayValue, setDisplayValue] = useState<Station | undefined>(undefined)
+  const [selectedIdx, setSelectedIdx] = useState(0)
 
   useEffect(() => {
-    const index = options.findIndex((item) => item.stations.some((station) => station.id === value))
-    if (index > -1) {
-      setSelected(index)
-    }
-  }, [value, options])
-
-  useEffect(() => {
-    const station = options.flatMap((item) => item.stations).find((item) => item.id === value)
-    setDisplayValue(station)
-  }, [value, options])
+    if (!value) return
+    const selectedIdx = options.findIndex((item) => item.stations.some((station) => station.id === value.id))
+    setSelectedIdx(selectedIdx)
+  }, [value])
 
   return (
     <div>
@@ -42,7 +37,7 @@ const Select: React.FC<SelectProps> = ({ label, placeholder, options, value, onC
           className={cx({
             'italic text-gray-500	': !value,
           })}>
-          {value ? displayValue?.name : placeholder}
+          {value ? `${value.name[language as 'th' | 'en']} (${value.alias || value.id})` : placeholder}
         </span>
       </button>
       <div
@@ -56,32 +51,47 @@ const Select: React.FC<SelectProps> = ({ label, placeholder, options, value, onC
           onClick={(e) => e.stopPropagation()}>
           <span className="text-2xl text-gray-500">{label}</span>
           <div className="flex justify-evenly gap-4">
-            {options.map((item, index) => (
-              <Button
-                key={index}
-                className={cx({
-                  'font-bold': selected === index,
-                })}
-                onClick={() => setSelected(index)}>
-                {t(`misc.lines.${item.name}`)}
-              </Button>
-            ))}
+            {options.map((item, index) => {
+              return (
+                <Button
+                  key={index}
+                  // using inline style because tailwindcss doesn't support dynamic color
+                  style={{
+                    backgroundColor: item.color,
+                  }}
+                  className={cx({
+                    'font-bold': selectedIdx === index,
+                  })}
+                  onClick={() => setSelectedIdx(index)}>
+                  {item.name[language as 'th' | 'en']}
+                </Button>
+              )
+            })}
           </div>
-          <div className="flex flex-wrap justify-between overflow-auto">
-            {options[selected]?.stations.map((item, index) => (
-              <div key={index} className="w-1/3 p-4 text-black">
+          <div className="grid grid-cols-3 overflow-y-scroll">
+            {options[selectedIdx]?.stations.map((item, index) => (
+              <div key={index} className="p-4 text-black">
                 <button
                   key={index}
-                  className={cx('w-full border-b border-gray-500 text-left hover:border-blue-500', {
-                    'font-bold': item.id === value,
+                  disabled={item.unavailable}
+                  className={cx('w-full border-b border-gray-500 text-left hover:border-blue-500 disabled:opacity-50', {
+                    'font-bold': item.id === value?.id,
                   })}
                   onClick={() => {
-                    onChange(item.id)
+                    onChange(item)
                     setIsOptionsOpen(false)
                   }}>
-                  <div className="flex justify-between">
-                    <span className="line-clamp-1">{item.name}</span>
-                    {item.id === value && <CheckSvg className="text-blue-800" />}
+                  <div className="flex items-center justify-between">
+                    <span className="line-clamp-1">{`${item.name[language as 'th' | 'en']} (${
+                      item.alias || item.id
+                    })`}</span>
+                    <span
+                      className={cx('text-xs text-gray-500', {
+                        italic: item.unavailable,
+                      })}>
+                      {item.unavailable && t('home_page.booking.step.0.unavailable')}
+                    </span>
+                    {item.id === value?.id && <CheckSvg className="text-blue-800" />}
                   </div>
                 </button>
               </div>

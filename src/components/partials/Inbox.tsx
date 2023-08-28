@@ -7,24 +7,20 @@ import { useTranslation } from 'react-i18next'
 interface InboxProps {}
 
 const Inbox: React.FC<InboxProps> = () => {
-  const { t } = useTranslation()
-  const { getOneTicket, getOneStation, getAllHistory, updateHistory } = useContext(DataContext)
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation()
+  const { stations, tickets, histories, updateHistory } = useContext(DataContext)
 
-  const histories = getAllHistory().sort((a, b) => {
-    if (a.createAt < b.createAt) {
-      return 1
-    } else if (a.createAt > b.createAt) {
-      return -1
-    } else {
-      return 0
-    }
-  })
+  const findOneTicket = (id: string) => tickets.find((item) => item.id === id)
+  const findOneStation = (id: string) => stations.find((item) => item.id === id)
 
   return (
     <div className="flex w-full flex-col gap-4">
       {histories.length > 0 ? (
         histories.map((item, index) => {
-          const ticket = getOneTicket(item.ticketId)
+          const ticket = findOneTicket(item.ticketId)
           return (
             ticket && (
               <button
@@ -33,28 +29,25 @@ const Inbox: React.FC<InboxProps> = () => {
                 disabled={!!item.readAt}
                 onClick={() => {
                   if (!item.readAt) {
-                    updateHistory({
-                      ...item,
-                      readAt: new Date().toISOString(),
-                    })
+                    updateHistory(item.id)
                   }
                 }}>
                 <div
                   key={index}
                   className={cx(
                     'flex w-2/3 justify-between overflow-hidden rounded-lg px-10 py-4 shadow-lg transition-all duration-500',
-                    item.newStatus === 'paid'
+                    item.status === 'paid'
                       ? 'bg-green-500'
-                      : item.newStatus === 'cancelled'
+                      : item.status === 'cancelled'
                       ? 'bg-red-500'
                       : 'bg-yellow-500',
                     item.readAt ? 'opacity-50' : 'opacity-100'
                   )}>
                   <div className="flex items-center text-lg">
                     {t('inbox.message', {
-                      from: getOneStation(ticket.from)?.name,
-                      to: getOneStation(ticket.to)?.name,
-                      action: t(`inbox.action.${item.newStatus}`),
+                      from: findOneStation(ticket.fromId)?.name[language as 'th' | 'en'],
+                      to: findOneStation(ticket.toId)?.name[language as 'th' | 'en'],
+                      action: t(`inbox.action.${item.status}`),
                     })}
                   </div>
                 </div>

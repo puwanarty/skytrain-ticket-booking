@@ -1,31 +1,34 @@
 'use client'
 import { History, Line, Station, Ticket } from '@/types/dto'
-import { generateLines, generateTickets, uuid } from '@/utils/data'
-import { createContext, useEffect, useState } from 'react'
+import { lines, stations, uuid } from '@/utils/data'
+import { compareDesc } from 'date-fns'
+import { createContext, useState } from 'react'
 
 interface DataContextProps {
-  getAllLine: () => Line[]
-  getOneStation: (id: string) => Station | undefined
-  getAllStation: () => Station[]
-  getOneTicket: (id: string) => Ticket | undefined
-  getAllTicket: () => Ticket[]
-  addTicket: (ticket: Ticket) => void
-  removeTicket: (ticket: Ticket) => void
-  updateTicket: (ticket: Ticket) => void
-  getAllHistory: () => History[]
-  updateHistory: (history: History) => void
+  lines: Line[]
+  stations: Station[]
+  tickets: Ticket[]
+  histories: History[]
+  createTicket: (values: {
+    id: string
+    fromId: string
+    toId: string
+    date: string
+    amount: number
+    price: number
+    payment: string
+  }) => void
+  updateTicket: (id: string, values: { status: 'pending' | 'paid' | 'cancelled' }) => void
+  updateHistory: (id: string) => void
 }
 
 export const DataContext = createContext<DataContextProps>({
-  getAllLine: () => [],
-  getOneStation: () => undefined,
-  getAllStation: () => [],
-  getOneTicket: () => undefined,
-  getAllTicket: () => [],
-  addTicket: () => {},
-  removeTicket: () => {},
+  lines: [],
+  stations: [],
+  tickets: [],
+  histories: [],
+  createTicket: () => {},
   updateTicket: () => {},
-  getAllHistory: () => [],
   updateHistory: () => {},
 })
 
@@ -34,91 +37,77 @@ interface DataProviderProps {
 }
 
 export const DataContextProvider: React.FC<DataProviderProps> = ({ children }) => {
-  const [lines, setLines] = useState<Line[]>([])
   const [tickets, setTickets] = useState<Ticket[]>([])
   const [histories, setHistories] = useState<History[]>([])
 
-  const getAllLine = () => {
-    return lines
-  }
+  // TODO: add find one for all data
 
-  const getAllStation = () => {
-    return lines.map((item) => item.stations).flat()
-  }
+  const createTicket = (values: {
+    id: string
+    fromId: string
+    toId: string
+    date: string
+    amount: number
+    price: number
+    payment: string
+  }) => {
+    const ticket: Ticket = {
+      status: 'pending',
+      ...values,
+      createAt: new Date().toISOString(),
+    }
+    setTickets([...tickets, ticket])
 
-  const getOneStation = (id: string) => {
-    return getAllStation().find((item) => item.id === id)
-  }
-
-  const getOneTicket = (id: string) => {
-    return tickets.find((item) => item.id === id)
-  }
-  const getAllTicket = () => {
-    return tickets
-  }
-
-  const addTicket = (ticket: Ticket) => {
-    const history = {
+    const history: History = {
       id: uuid(),
       ticketId: ticket.id,
-      oldStatus: '',
-      newStatus: ticket.status,
+      status: ticket.status,
       createAt: new Date().toISOString(),
-    } as History
-
+    }
     setHistories([...histories, history])
-    setTickets([...tickets, ticket])
   }
 
-  const removeTicket = (ticket: Ticket) => {
-    setTickets(tickets.filter((item) => item.id !== ticket.id))
-  }
+  const updateTicket = (id: string, values: { status: 'pending' | 'paid' | 'cancelled' }) => {
+    const ticket = tickets.find((ticket) => ticket.id === id)
+    if (ticket) {
+      if (ticket.status === values.status) return
+      const newTicket: Ticket = {
+        ...ticket,
+        ...values,
+        updateAt: new Date().toISOString(),
+      }
+      setTickets([...tickets.filter((ticket) => ticket.id !== id), newTicket])
 
-  const updateTicket = (ticket: Ticket) => {
-    const target = tickets.find((item) => item.id === ticket.id)
-
-    if (target && target.status !== ticket.status) {
-      const history = {
+      const history: History = {
         id: uuid(),
-        ticketId: ticket.id,
-        oldStatus: target.status,
-        newStatus: ticket.status,
+        ticketId: newTicket.id,
+        status: newTicket.status,
         createAt: new Date().toISOString(),
-      } as History
+      }
       setHistories([...histories, history])
     }
-
-    setTickets(tickets.map((item) => (item.id === ticket.id ? ticket : item)))
   }
 
-  const getAllHistory = () => {
-    return histories
+  const updateHistory = (id: string) => {
+    const history = histories.find((history) => history.id === id)
+    if (history) {
+      const newHistory: History = {
+        ...history,
+        readAt: new Date().toISOString(),
+      }
+      setHistories([...histories.filter((history) => history.id !== id), newHistory])
+    }
   }
-
-  const updateHistory = (history: History) => {
-    setHistories(histories.map((item) => (item.id === history.id ? history : item)))
-  }
-
-  useEffect(() => {
-    setLines(generateLines(24))
-  }, [])
-
-  useEffect(() => {
-    setTickets(generateTickets(24, lines))
-  }, [lines])
 
   return (
     <DataContext.Provider
       value={{
-        getAllLine,
-        getOneStation,
-        getAllStation,
-        getOneTicket,
-        getAllTicket,
-        addTicket,
-        removeTicket,
+        lines,
+        stations,
+        tickets,
+        histories: histories.sort((a, b) => compareDesc(new Date(a.createAt), new Date(b.createAt))),
+        createTicket,
         updateTicket,
-        getAllHistory,
         updateHistory,
       }}>
       {children}

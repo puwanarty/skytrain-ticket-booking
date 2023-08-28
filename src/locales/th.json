@@ -50,12 +50,13 @@
               },
               "amount": {
                 "label": "จำนวน",
-                "unit": "คน"
+                "unit": "ใบ"
               },
               "price": {
                 "unit": "บาท"
               }
             },
+            "unavailable": "สถานีในอนาคต",
             "submit": "ต่อไป"
           },
           {
@@ -64,6 +65,7 @@
               "payment_method": {
                 "label": "เลือกวิธีการชำระเงิน",
                 "options": {
+                  "crypto": "เงินดิจิทัล",
                   "promptpay": "พร้อมเพย์",
                   "creditcard": "บัตรเครดิต",
                   "banktransfer": "โอนผ่านธนาคาร"

@@ -50,12 +50,13 @@
               },
               "amount": {
                 "label": "Amount",
-                "unit": "person"
+                "unit": "ticket(s)"
               },
               "price": {
                 "unit": "baht"
               }
             },
+            "unavailable": "Unavailable",
             "submit": "Next"
           },
           {
@@ -64,6 +65,7 @@
               "payment_method": {
                 "label": "Payment Method",
                 "options": {
+                  "crypto": "Cryptocurrency",
                   "promptpay": "PromptPay",
                   "creditcard": "Credit Card",
                   "banktransfer": "Bank Transfer"

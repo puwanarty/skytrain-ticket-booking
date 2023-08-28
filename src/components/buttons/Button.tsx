@@ -7,7 +7,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElem
       <button
         ref={ref}
         className={cx(
-          'w-full rounded-full bg-blue-800 px-4 py-2 text-white hover:bg-blue-900 disabled:opacity-50',
+          'w-full rounded-full bg-blue-800 px-4 py-2 text-white hover:opacity-90 disabled:opacity-50',
           className
         )}
         {...props}>

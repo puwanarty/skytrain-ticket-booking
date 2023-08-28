@@ -5,8 +5,8 @@ import FormControl from '@/components/partials/FormControl'
 import TicketLayout from '@/components/partials/TicketLayout'
 import { DataContext } from '@/contexts/data'
 import { LayoutContext } from '@/contexts/layout'
-import { Ticket } from '@/types/dto'
-import { uuid } from '@/utils/data'
+import { Station } from '@/types/dto'
+import { calculateNumberOfStationsBetweenStations, calculatePrice, uuid } from '@/utils/data'
 import { formatDate } from '@/utils/date'
 import cx from 'classnames'
 import React from 'react'
@@ -15,53 +15,69 @@ import { useTranslation } from 'react-i18next'
 import {
   ArrowNarrowRightSvg,
   BrandMastercardSvg,
-  BrandVisaSvg,
   BuildingBankSvg,
   CalendarSvg,
+  CoinBitcoinSvg,
   CoinSvg,
   QrcodeSvg,
   ReloadSvg,
   SquareRoundedMinusSvg,
   SquareRoundedPlusSvg,
+  TicketSvg,
   TrainSvg,
-  UsersGroupSvg,
 } from '@/components/svg'
 
 interface BookingProps {}
 
 const Booking: React.FC<BookingProps> = () => {
-  const { t } = useTranslation()
-  const { getAllLine, getAllStation, addTicket } = useContext(DataContext)
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation()
+  const { lines, stations, createTicket } = useContext(DataContext)
   const { onChangeState } = useContext(LayoutContext)
-  const lines = getAllLine()
-  const stations = getAllStation()
 
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
+  const [from, setFrom] = useState<Station>()
+  const [to, setTo] = useState<Station>()
   const [date, setDate] = useState(new Date().toISOString())
   const [amount, setAmount] = useState(1)
   const [payment, setPayment] = useState('')
-  const [ticketId] = useState(uuid())
+  const [price, setPrice] = useState(0)
+  const [id, setId] = useState('')
 
   const [step, setStep] = useState(1)
 
   const onSubmitStep = (s: number) => {
-    if (s === 3) {
-      const dto = {
-        id: ticketId,
-        from,
-        to,
-        date,
-        amount,
-        payment,
-        price: amount * 50,
-        status: 'pending',
-        createAt: new Date().toISOString(),
-      } as Ticket
-      addTicket(dto)
-      onChangeState('home_page')
+    if (s === 1) {
+      if (from && to) {
+        const numberOfStations = calculateNumberOfStationsBetweenStations(from.id, to.id)
+        const price = calculatePrice(numberOfStations)
+        setPrice(price)
+
+        const id = uuid()
+        setId(id)
+      }
     }
-    setStep(s + 1)
+    // step 3
+    if (s === 3) {
+      if (from && to) {
+        const dto = {
+          id,
+          fromId: from.id,
+          toId: to.id,
+          date,
+          amount,
+          price,
+          payment,
+        }
+        console.log(dto)
+        createTicket(dto)
+        onChangeState('home_page')
+      }
+    }
+
+    // next step
+    if (s < 3) setStep(s + 1)
   }
 
   const onSwap = () => {
@@ -72,15 +88,12 @@ const Booking: React.FC<BookingProps> = () => {
 
   const getIcon = (id: string) => {
     switch (id) {
+      case 'crypto':
+        return <CoinBitcoinSvg className="h-6 w-6 text-blue-800" />
       case 'promptpay':
         return <QrcodeSvg className="h-6 w-6 text-blue-800" />
       case 'creditcard':
-        return (
-          <div className="flex gap-2">
-            <BrandMastercardSvg className="h-6 w-6 text-blue-800" />
-            <BrandVisaSvg className="h-6 w-6 text-blue-800" />
-          </div>
-        )
+        return <BrandMastercardSvg className="h-6 w-6 text-blue-800" />
       case 'banktransfer':
         return <BuildingBankSvg className="h-6 w-6 text-blue-800" />
       default:
@@ -94,13 +107,15 @@ const Booking: React.FC<BookingProps> = () => {
         <div className="flex w-3/4 items-center justify-center">
           {[1, 2, 3].map((item) => (
             <React.Fragment key={item}>
-              <div
+              <button
+                disabled={item > step - 1}
+                onClick={() => setStep(item)}
                 className={cx(
                   'flex h-8 w-8 items-center justify-center rounded-full text-white transition-all duration-500',
                   item > step ? 'bg-gray-300' : 'bg-blue-500'
                 )}>
                 {item}
-              </div>
+              </button>
               {item < 3 && (
                 <div
                   className={cx(
@@ -124,7 +139,7 @@ const Booking: React.FC<BookingProps> = () => {
                     <Select
                       placeholder={t('home_page.booking.step.0.field.from.placeholder')}
                       options={lines}
-                      onChange={(id) => setFrom(id)}
+                      onChange={setFrom}
                       value={from}
                     />
                     <TrainSvg className="h-6 w-6 text-gray-500" />
@@ -152,7 +167,7 @@ const Booking: React.FC<BookingProps> = () => {
                     <Select
                       placeholder={t('home_page.booking.step.0.field.to.placeholder')}
                       options={lines}
-                      onChange={(id) => setTo(id)}
+                      onChange={setTo}
                       value={to}
                     />
                     <TrainSvg className="h-6 w-6 text-gray-500" />
@@ -173,12 +188,12 @@ const Booking: React.FC<BookingProps> = () => {
                     <button onClick={() => setAmount(amount + 1)}>
                       <SquareRoundedPlusSvg className="h-6 w-6 text-blue-500 hover:text-blue-600" />
                     </button>
-                    <UsersGroupSvg className="h-6 w-6 text-gray-500" />
+                    <TicketSvg className="h-6 w-6 text-gray-500" />
                   </FormControl>
                 </div>
               </div>
             </div>
-            <Button disabled={from === '' || to === ''} onClick={() => onSubmitStep(1)}>
+            <Button disabled={!from || !to} onClick={() => onSubmitStep(1)}>
               {t('home_page.booking.step.0.submit')}
             </Button>
           </div>
@@ -186,47 +201,61 @@ const Booking: React.FC<BookingProps> = () => {
         {step === 2 && (
           <div className="flex h-full flex-1 flex-col justify-center gap-8">
             <div className="flex flex-1 gap-8 text-lg">
-              <div className="flex flex-1 flex-col justify-evenly font-bold">
-                <div className="flex items-center justify-between gap-6">
-                  <TrainSvg className="h-6 w-6 text-blue-800" />
-                  <span className="text-center">{stations.find((item) => item.id === from)?.name}</span>
-                  <ArrowNarrowRightSvg className="h-6 w-6 text-blue-800" />
-                  <span className="text-center">{stations.find((item) => item.id === to)?.name}</span>
-                  <TrainSvg className="h-6 w-6 text-blue-800" />
+              <div className="flex flex-1 flex-col items-center gap-2 font-bold">
+                <span>{t('home_page.booking.step.1.field.payment_method.label')}</span>
+                <div className="flex h-full w-full items-center justify-between gap-6">
+                  <TrainSvg className="h-8 w-8 text-blue-800" />
+                  <div className="grid flex-1 grid-rows-1">
+                    <span className="text-center">{`${from?.name[language as 'th' | 'en']}`}</span>
+                    <span className="text-center">{`(${from?.alias || from?.id})`}</span>
+                  </div>
+                  <ArrowNarrowRightSvg className="h-8 w-8 text-blue-800" />
+                  <div className="grid flex-1 grid-rows-1">
+                    <span className="text-center">{`${to?.name[language as 'th' | 'en']}`}</span>
+                    <span className="text-center ">{`(${to?.alias || to?.id})`}</span>
+                  </div>
+                  <TrainSvg className="h-8 w-8 text-blue-800" />
                 </div>
-                <div className="flex items-center justify-between gap-6">
-                  <CalendarSvg className="h-6 w-6 text-blue-800" />
-                  <span>{formatDate(date)}</span>
-                  <span className="w-10" />
-                </div>
-                <div className="flex items-center justify-between gap-6">
-                  <UsersGroupSvg className="h-6 w-6 text-blue-800" />
-                  <span>{amount}</span>
-                  <span className="w-10 text-center">{t('home_page.booking.step.0.field.amount.unit')}</span>
-                </div>
-                <div className="flex items-center justify-between gap-6">
-                  <CoinSvg className="h-6 w-6 text-blue-800" />
-                  <span>{amount * 50}</span>
-                  <span className="w-10 text-center">{t('home_page.booking.step.0.field.price.unit')}</span>
+                <div className="grid grid-cols-3">
+                  <div className="flex items-center justify-center gap-2">
+                    <CalendarSvg className="h-8 w-8 text-blue-800" />
+                    <span className="line-clamp-1">{formatDate(date)}</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-2">
+                    <TicketSvg className="h-8 w-8 text-blue-800" />
+                    <span className="line-clamp-1">{amount}</span>
+                    <span>{t('home_page.booking.step.0.field.amount.unit')}</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-2">
+                    <CoinSvg className="h-8 w-8 text-blue-800" />
+                    <span className="line-clamp-1">{price}</span>
+                    <span>{t('home_page.booking.step.0.field.price.unit')}</span>
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-1 flex-col items-center justify-evenly gap-2 font-bold">
+              <div className="flex flex-1 flex-col items-center gap-2 font-bold">
                 <span>{t('home_page.booking.step.1.field.payment_method.label')}</span>
-                {['promptpay', 'creditcard', 'banktransfer'].map((item, index) => (
-                  <button
-                    key={index}
-                    className="h-10 w-3/4 rounded-full bg-white shadow-lg"
-                    onClick={() => setPayment(item)}>
-                    <div className="flex justify-center">
-                      <div className="flex w-3/4">
-                        <div className="w-1/5">{getIcon(item)}</div>
-                        <span className={cx('flex-1', item === payment ? 'font-bold text-blue-800' : 'font-normal')}>
-                          {t(`home_page.booking.step.1.field.payment_method.options.${item}`)}
-                        </span>
+                <div className="flex w-2/3 flex-col gap-2">
+                  {['promptpay', 'creditcard', 'banktransfer'].map((item, index) => (
+                    <button
+                      key={index}
+                      className="h-fit w-full rounded-full bg-white py-2 shadow-lg"
+                      onClick={() => setPayment(item)}>
+                      <div className="flex justify-center">
+                        <div className="flex w-3/4 items-center">
+                          <div className="w-1/5">{getIcon(item)}</div>
+                          <span
+                            className={cx(
+                              'line-clamp-1 flex-1',
+                              item === payment ? 'font-bold text-blue-800' : 'font-normal'
+                            )}>
+                            {t(`home_page.booking.step.1.field.payment_method.options.${item}`)}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
             <Button disabled={payment === ''} onClick={() => onSubmitStep(2)}>
@@ -239,7 +268,7 @@ const Booking: React.FC<BookingProps> = () => {
             <div className="flex flex-1 gap-8 text-lg">
               <div className="flex flex-1 flex-col items-center justify-evenly font-bold">
                 <span>{t('home_page.booking.step.2.message.0')}</span>
-                <span>{t('home_page.booking.step.2.message.1', { bookingId: ticketId })}</span>
+                <span>{t('home_page.booking.step.2.message.1', { bookingId: id })}</span>
                 <span>{t('home_page.booking.step.2.message.2')}</span>
               </div>
               <div className="flex flex-1 flex-col items-center justify-evenly font-bold">

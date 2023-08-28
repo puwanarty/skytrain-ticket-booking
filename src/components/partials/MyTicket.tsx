@@ -1,9 +1,9 @@
+import NotFound from '@/components/partials/NotFound'
 import { ArrowNarrowRightSvg } from '@/components/svg'
 import { DataContext } from '@/contexts/data'
 import { Ticket } from '@/types/dto'
 import { formatDate, isExpired } from '@/utils/date'
 import cx from 'classnames'
-import { compareDesc } from 'date-fns'
 import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -14,17 +14,22 @@ interface TicketDetailProps {
 }
 
 const TicketDetail: React.FC<TicketDetailProps> = ({ ticket, isFull, onClose }) => {
-  const { t } = useTranslation()
-  const { getOneStation, updateTicket } = useContext(DataContext)
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation()
+  const { stations, updateTicket } = useContext(DataContext)
+
+  const getOneStation = (id: string) => stations.find((item) => item.id === id)
 
   return (
     ticket && (
       <>
         <div
           className={cx('flex w-full items-center justify-center bg-blue-800 p-4', isFull ? 'text-lg' : 'text-base')}>
-          <span className="line-clamp-1">{getOneStation(ticket.from)?.name}</span>
+          <span className="line-clamp-1">{getOneStation(ticket.fromId)?.name[language as 'th' | 'en']}</span>
           <ArrowNarrowRightSvg className="mx-2" />
-          <span className="line-clamp-1">{getOneStation(ticket.to)?.name}</span>
+          <span className="line-clamp-1">{getOneStation(ticket.toId)?.name[language as 'th' | 'en']}</span>
         </div>
         <div className={cx('flex w-full', isFull ? 'justify-evenly' : 'justify-center')}>
           <div className="flex flex-col items-center justify-center gap-2 p-2 text-gray-500">
@@ -57,8 +62,7 @@ const TicketDetail: React.FC<TicketDetailProps> = ({ ticket, isFull, onClose }) 
                   <button
                     className="rounded-full bg-green-500 px-2 text-sm text-white"
                     onClick={() => {
-                      updateTicket({
-                        ...ticket,
+                      updateTicket(ticket.id, {
                         status: 'paid',
                       })
                       onClose()
@@ -70,8 +74,7 @@ const TicketDetail: React.FC<TicketDetailProps> = ({ ticket, isFull, onClose }) 
                   <button
                     className="rounded-full bg-gray-500 px-2 text-sm text-white"
                     onClick={() => {
-                      updateTicket({
-                        ...ticket,
+                      updateTicket(ticket.id, {
                         status: 'cancelled',
                       })
                       onClose()
@@ -102,11 +105,9 @@ const TicketDetail: React.FC<TicketDetailProps> = ({ ticket, isFull, onClose }) 
 }
 
 const MyTicket = () => {
-  const { getAllTicket } = useContext(DataContext)
+  const { tickets } = useContext(DataContext)
   const [isOpen, setIsOpen] = useState(false)
   const [ticket, setTicket] = useState<Ticket>()
-
-  const tickets = getAllTicket().sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
 
   const onOpen = (id: string) => {
     const ticket = tickets.find((item) => item.id === id)
@@ -118,7 +119,7 @@ const MyTicket = () => {
     setIsOpen(false)
   }
 
-  return (
+  return tickets.length > 0 ? (
     <React.Fragment>
       <div
         className={cx(
@@ -132,7 +133,7 @@ const MyTicket = () => {
           <TicketDetail ticket={ticket} isFull onClose={onClose} />
         </div>
       </div>
-      <div className="grid grid-cols-4 items-center justify-center gap-4">
+      <div className="grid w-3/4 grid-cols-4 items-center justify-center gap-4">
         {tickets.map((item, index) => (
           <button
             key={index}
@@ -144,6 +145,8 @@ const MyTicket = () => {
         ))}
       </div>
     </React.Fragment>
+  ) : (
+    <NotFound type="no_data" />
   )
 }
 

@@ -1,31 +1,40 @@
 export type Station = {
   id: string
-  name: string
+  alias?: string
+  unavailable?: boolean
+  name: {
+    en: string
+    th: string
+  }
 }
 
 export type Line = {
   id: string
-  name: string
+  color: string
+  name: {
+    en: string
+    th: string
+  }
   stations: Station[]
 }
 
 export type Ticket = {
-  id: string // kebab case, 18 chars, 3 groups, 6 chars each
-  from: string // station id
-  to: string // station id
-  date: string // ISO 8601
-  amount: number // baht rounded no decimal
-  price: number // baht rounded no decimal
-  payment: string // payment id
-  status: string // enum: pending, paid, cancelled
-  createAt: string // ISO 8601
+  id: string
+  fromId: string
+  toId: string
+  date: string
+  amount: number
+  price: number
+  payment: string
+  status: 'pending' | 'paid' | 'cancelled'
+  createAt: string
+  updateAt?: string
 }
 
 export type History = {
   id: string
   ticketId: string
-  oldStatus?: string
-  newStatus: string
+  status: 'pending' | 'paid' | 'cancelled'
   createAt: string
   readAt?: string
 }

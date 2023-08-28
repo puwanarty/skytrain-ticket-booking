@@ -8,9 +8,7 @@ import { useTranslation } from 'react-i18next'
 const Sidebar = () => {
   const { t } = useTranslation()
   const { isMenuOpen, closeMenu, onChangeState } = useContext(LayoutContext)
-  const { getAllHistory } = useContext(DataContext)
-
-  const histories = getAllHistory()
+  const { histories } = useContext(DataContext)
 
   const getIcon = (path: string) => {
     switch (path) {
