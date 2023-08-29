@@ -18,18 +18,16 @@ const TicketDetail: React.FC<TicketDetailProps> = ({ ticket, isFull, onClose }) 
     t,
     i18n: { language },
   } = useTranslation()
-  const { stations, updateTicket } = useContext(DataContext)
-
-  const getOneStation = (id: string) => stations.find((item) => item.id === id)
+  const { findStation, updateTicket } = useContext(DataContext)
 
   return (
     ticket && (
       <>
         <div
           className={cx('flex w-full items-center justify-center bg-blue-800 p-4', isFull ? 'text-lg' : 'text-base')}>
-          <span className="line-clamp-1">{getOneStation(ticket.fromId)?.name[language as 'th' | 'en']}</span>
+          <span className="line-clamp-1">{findStation(ticket.fromId)?.name[language as 'th' | 'en']}</span>
           <ArrowNarrowRightSvg className="mx-2" />
-          <span className="line-clamp-1">{getOneStation(ticket.toId)?.name[language as 'th' | 'en']}</span>
+          <span className="line-clamp-1">{findStation(ticket.toId)?.name[language as 'th' | 'en']}</span>
         </div>
         <div className={cx('flex w-full', isFull ? 'justify-evenly' : 'justify-center')}>
           <div className="flex flex-col items-center justify-center gap-2 p-2 text-gray-500">

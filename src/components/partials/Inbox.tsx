@@ -11,16 +11,13 @@ const Inbox: React.FC<InboxProps> = () => {
     t,
     i18n: { language },
   } = useTranslation()
-  const { stations, tickets, histories, updateHistory } = useContext(DataContext)
-
-  const findOneTicket = (id: string) => tickets.find((item) => item.id === id)
-  const findOneStation = (id: string) => stations.find((item) => item.id === id)
+  const { histories, findStation, findTicket, updateHistory } = useContext(DataContext)
 
   return (
     <div className="flex w-full flex-col gap-4">
       {histories.length > 0 ? (
         histories.map((item, index) => {
-          const ticket = findOneTicket(item.ticketId)
+          const ticket = findTicket(item.ticketId)
           return (
             ticket && (
               <button
@@ -45,8 +42,8 @@ const Inbox: React.FC<InboxProps> = () => {
                   )}>
                   <div className="flex items-center text-lg">
                     {t('inbox.message', {
-                      from: findOneStation(ticket.fromId)?.name[language as 'th' | 'en'],
-                      to: findOneStation(ticket.toId)?.name[language as 'th' | 'en'],
+                      from: findStation(ticket.fromId)?.name[language as 'th' | 'en'],
+                      to: findStation(ticket.toId)?.name[language as 'th' | 'en'],
                       action: t(`inbox.action.${item.status}`),
                     })}
                   </div>

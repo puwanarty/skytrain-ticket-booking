@@ -9,6 +9,8 @@ interface DataContextProps {
   stations: Station[]
   tickets: Ticket[]
   histories: History[]
+  findStation: (id: string) => Station | undefined
+  findTicket: (id: string) => Ticket | undefined
   createTicket: (values: {
     id: string
     fromId: string
@@ -27,6 +29,8 @@ export const DataContext = createContext<DataContextProps>({
   stations: [],
   tickets: [],
   histories: [],
+  findStation: () => undefined,
+  findTicket: () => undefined,
   createTicket: () => {},
   updateTicket: () => {},
   updateHistory: () => {},
@@ -40,7 +44,8 @@ export const DataContextProvider: React.FC<DataProviderProps> = ({ children }) =
   const [tickets, setTickets] = useState<Ticket[]>([])
   const [histories, setHistories] = useState<History[]>([])
 
-  // TODO: add find one for all data
+  const findStation = (id: string) => stations.find((station) => station.id === id)
+  const findTicket = (id: string) => tickets.find((item) => item.id === id)
 
   const createTicket = (values: {
     id: string
@@ -104,8 +109,10 @@ export const DataContextProvider: React.FC<DataProviderProps> = ({ children }) =
       value={{
         lines,
         stations,
-        tickets,
+        tickets: tickets.sort((a, b) => compareDesc(new Date(a.createAt), new Date(b.createAt))),
         histories: histories.sort((a, b) => compareDesc(new Date(a.createAt), new Date(b.createAt))),
+        findStation,
+        findTicket,
         createTicket,
         updateTicket,
         updateHistory,
