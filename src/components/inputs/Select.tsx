@@ -1,8 +1,9 @@
 import Button from '@/components/buttons/Button'
 import { CheckSvg } from '@/components/svg'
+import { DataContext } from '@/contexts/data'
 import { Line, Station } from '@/types/dto'
 import cx from 'classnames'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 interface SelectProps {
@@ -20,6 +21,7 @@ const Select: React.FC<SelectProps> = ({ label, placeholder, options, value, onC
   } = useTranslation()
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
   const [selectedIdx, setSelectedIdx] = useState(0)
+  const { interchanges } = useContext(DataContext)
 
   useEffect(() => {
     if (!value) return
@@ -82,9 +84,10 @@ const Select: React.FC<SelectProps> = ({ label, placeholder, options, value, onC
                     setIsOptionsOpen(false)
                   }}>
                   <div className="flex items-center justify-between">
-                    <span className="line-clamp-1">{`${item.name[language as 'th' | 'en']} (${
-                      item.alias || item.id
-                    })`}</span>
+                    <span className="line-clamp-1">
+                      {`${item.name[language as 'th' | 'en']} (${item.alias || item.id})`}
+                      {interchanges.some((interchange) => interchange === item.id) && '*'}
+                    </span>
                     <span
                       className={cx('text-xs text-gray-500', {
                         italic: item.unavailable,
@@ -96,6 +99,7 @@ const Select: React.FC<SelectProps> = ({ label, placeholder, options, value, onC
                 </button>
               </div>
             ))}
+            <span className="col-span-3 text-xs italic text-gray-500">{t('home_page.booking.step.0.interchange')}</span>
           </div>
         </div>
       </div>

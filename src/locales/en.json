@@ -57,6 +57,7 @@
               }
             },
             "unavailable": "Unavailable",
+            "interchange": "* Interchange station. You can see the same station name in other lines.",
             "submit": "Next"
           },
           {

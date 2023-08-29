@@ -1,12 +1,13 @@
 'use client'
 import { History, Line, Station, Ticket } from '@/types/dto'
-import { lines, stations, uuid } from '@/utils/data'
+import { interchanges, lines, stations, uuid } from '@/utils/data'
 import { compareDesc } from 'date-fns'
 import { createContext, useState } from 'react'
 
 interface DataContextProps {
   lines: Line[]
   stations: Station[]
+  interchanges: string[]
   tickets: Ticket[]
   histories: History[]
   findStation: (id: string) => Station | undefined
@@ -27,6 +28,7 @@ interface DataContextProps {
 export const DataContext = createContext<DataContextProps>({
   lines: [],
   stations: [],
+  interchanges: [],
   tickets: [],
   histories: [],
   findStation: () => undefined,
@@ -109,6 +111,7 @@ export const DataContextProvider: React.FC<DataProviderProps> = ({ children }) =
       value={{
         lines,
         stations,
+        interchanges,
         tickets: tickets.sort((a, b) => compareDesc(new Date(a.createAt), new Date(b.createAt))),
         histories: histories.sort((a, b) => compareDesc(new Date(a.createAt), new Date(b.createAt))),
         findStation,

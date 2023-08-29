@@ -1,9 +1,9 @@
 import raw from '@/constants/stations'
 import { Line, Station } from '@/types/dto'
 
-const interchanges = ['CEN', 'N2'] // define interchanges here
 export const lines = raw as Line[]
 export const stations = raw.map((line) => line.stations).flat() as Station[]
+export const interchanges = ['CEN', 'N2'] // define interchanges here
 
 // create bidirectional connections from stations to calculate the shortest path
 // https://www.geeksforgeeks.org/bidirectional-search/
