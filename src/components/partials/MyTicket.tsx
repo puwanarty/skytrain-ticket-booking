@@ -95,7 +95,7 @@ const TicketDetail: React.FC<TicketDetailProps> = ({ ticket, isFull, onClose }) 
             )}>
             {t(`misc.status.${ticket.status}`)}
           </span>
-          <span>{`ราคา ${ticket.price} บาท`}</span>
+          <span>{`ราคา ${ticket.price * ticket.amount} บาท`}</span>
         </div>
       </>
     )

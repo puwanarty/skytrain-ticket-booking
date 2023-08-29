@@ -225,7 +225,7 @@ const Booking: React.FC<BookingProps> = () => {
                   </div>
                   <div className="flex items-center justify-center gap-2">
                     <CoinSvg className="h-8 w-8 text-blue-800" />
-                    <span className="line-clamp-1">{price}</span>
+                    <span className="line-clamp-1">{price * amount}</span>
                     <span>{t('home_page.booking.step.0.field.price.unit')}</span>
                   </div>
                 </div>
