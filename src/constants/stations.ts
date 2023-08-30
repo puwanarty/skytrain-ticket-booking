@@ -1,7 +1,7 @@
 // https://www.bts.co.th/eng/library/system-structuer.html
 // data as of 2023
 
-export default [
+const stations = [
   {
     id: 'airport-rail-link',
     name: {
@@ -350,3 +350,5 @@ export default [
     ],
   },
 ]
+
+export default stations

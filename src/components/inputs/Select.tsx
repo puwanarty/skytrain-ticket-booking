@@ -27,7 +27,7 @@ const Select: React.FC<SelectProps> = ({ label, placeholder, options, value, onC
     if (!value) return
     const selectedIdx = options.findIndex((item) => item.stations.some((station) => station.id === value.id))
     setSelectedIdx(selectedIdx)
-  }, [value])
+  }, [value, options])
 
   return (
     <div>
