@@ -20,17 +20,15 @@ const Inbox: React.FC<InboxProps> = () => {
           const ticket = findTicket(item.ticketId)
           return (
             ticket && (
-              <button
-                key={index}
-                className="flex justify-center"
-                disabled={!!item.readAt}
-                onClick={() => {
-                  if (!item.readAt) {
-                    updateHistory(item.id)
-                  }
-                }}>
-                <div
+              <div key={index} className="flex justify-center">
+                <button
                   key={index}
+                  disabled={!!item.readAt}
+                  onClick={() => {
+                    if (!item.readAt) {
+                      updateHistory(item.id)
+                    }
+                  }}
                   className={cx(
                     'flex w-2/3 justify-between overflow-hidden rounded-lg px-10 py-4 shadow-lg transition-all duration-500',
                     item.status === 'paid'
@@ -48,8 +46,8 @@ const Inbox: React.FC<InboxProps> = () => {
                       interpolation: { escapeValue: false },
                     })}
                   </div>
-                </div>
-              </button>
+                </button>
+              </div>
             )
           )
         })

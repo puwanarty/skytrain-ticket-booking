@@ -4,6 +4,7 @@ import BrandVisaSvg from '@/components/svg/BrandVisaSvg'
 import BuildingBankSvg from '@/components/svg/BuildingBankSvg'
 import CalendarSvg from '@/components/svg/CalendarSvg'
 import CheckSvg from '@/components/svg/CheckSvg'
+import ChevronDownSvg from '@/components/svg/ChevronDownSvg'
 import CoinSvg from '@/components/svg/CoinSvg'
 import CopyrightSvg from '@/components/svg/CopyrightSvg'
 import HomeSvg from '@/components/svg/HomeSvg'
@@ -27,6 +28,7 @@ export {
   BuildingBankSvg,
   CalendarSvg,
   CheckSvg,
+  ChevronDownSvg,
   CoinSvg,
   CopyrightSvg,
   HomeSvg,

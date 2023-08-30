@@ -50,6 +50,8 @@ export const LayoutContextProvider: React.FC<LayoutProviderProps> = ({ children 
         return 'inbox'
       case 'contact_us':
         return 'contact_us'
+      case 'faq':
+        return 'faq'
       default:
         return 'home_page'
     }

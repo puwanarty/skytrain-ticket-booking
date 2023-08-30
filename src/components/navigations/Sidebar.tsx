@@ -18,7 +18,7 @@ const Sidebar = () => {
         return <InboxSvg className="h-10 w-10" />
       case 'contact_us':
         return <PhoneSvg className="h-10 w-10" />
-      case 'help_center':
+      case 'faq':
         return <InfoCircleSvg className="h-10 w-10" />
       default:
         return <HomeSvg className="h-10 w-10" />
@@ -39,7 +39,7 @@ const Sidebar = () => {
         )}
         onClick={(e) => e.stopPropagation()}>
         <div className="flex h-full flex-col justify-center gap-14 px-10 py-6 text-white">
-          {['home_page', 'my_ticket', 'inbox', 'contact_us', 'help_center'].map((item, index) => (
+          {['home_page', 'my_ticket', 'inbox', 'contact_us', 'faq'].map((item, index) => (
             <button
               key={index}
               className="transition-all duration-200 hover:scale-110"
