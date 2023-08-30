@@ -45,6 +45,7 @@ const Inbox: React.FC<InboxProps> = () => {
                       from: findStation(ticket.fromId)?.name[language as 'th' | 'en'],
                       to: findStation(ticket.toId)?.name[language as 'th' | 'en'],
                       action: t(`inbox.action.${item.status}`),
+                      interpolation: { escapeValue: false },
                     })}
                   </div>
                 </div>

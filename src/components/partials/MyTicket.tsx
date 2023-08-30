@@ -24,10 +24,10 @@ const TicketDetail: React.FC<TicketDetailProps> = ({ ticket, isFull, onClose }) 
     ticket && (
       <>
         <div
-          className={cx('flex w-full items-center justify-center bg-blue-800 p-4', isFull ? 'text-lg' : 'text-base')}>
-          <span className="line-clamp-1">{findStation(ticket.fromId)?.name[language as 'th' | 'en']}</span>
+          className={cx('flex w-full items-center text-center justify-center bg-blue-800 p-4', isFull ? 'text-lg' : 'text-base')}>
+          <span className="line-clamp-1 flex-1">{findStation(ticket.fromId)?.name[language as 'th' | 'en']}</span>
           <ArrowNarrowRightSvg className="mx-2" />
-          <span className="line-clamp-1">{findStation(ticket.toId)?.name[language as 'th' | 'en']}</span>
+          <span className="line-clamp-1 flex-1">{findStation(ticket.toId)?.name[language as 'th' | 'en']}</span>
         </div>
         <div className={cx('flex w-full', isFull ? 'justify-evenly' : 'justify-center')}>
           <div className="flex flex-col items-center justify-center gap-2 p-2 text-gray-500">

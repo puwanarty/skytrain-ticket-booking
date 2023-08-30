@@ -77,7 +77,7 @@
           },
           {
             "title": "Step 3",
-            "message": ["Booking ID", "Your booking ID is {{booking_id}}", "Please pay within 24 hours"],
+            "message": ["Booking ID", "Your booking ID is {{bookingId}}", "Please pay within 24 hours"],
             "qr_code": ["Scan QR Code", "or", "Click button below to pay"],
             "submit": "Confirm Booking"
           }
