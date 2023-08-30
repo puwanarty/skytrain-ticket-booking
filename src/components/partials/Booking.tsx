@@ -1,4 +1,5 @@
 import Button from '@/components/buttons/Button'
+import InfoButton from '@/components/buttons/InfoButton'
 import Datepicker from '@/components/inputs/Datepicker'
 import Select from '@/components/inputs/Select'
 import FormControl from '@/components/partials/FormControl'
@@ -33,7 +34,7 @@ const Booking: React.FC<BookingProps> = () => {
     t,
     i18n: { language },
   } = useTranslation()
-  const { lines, stations, createTicket } = useContext(DataContext)
+  const { lines, createTicket } = useContext(DataContext)
   const { onChangeState } = useContext(LayoutContext)
 
   const [from, setFrom] = useState<Station>()
@@ -49,7 +50,7 @@ const Booking: React.FC<BookingProps> = () => {
   const onSubmitStep = (s: number) => {
     if (s === 1) {
       if (from && to) {
-        const numberOfStations = calculateNumberOfStationsBetweenStations(from.id, to.id)
+        const { numberOfStations } = calculateNumberOfStationsBetweenStations(from.id, to.id)
         const price = calculatePrice(numberOfStations)
         setPrice(price)
 
@@ -69,7 +70,6 @@ const Booking: React.FC<BookingProps> = () => {
           price,
           payment,
         }
-        console.log(dto)
         createTicket(dto)
         onChangeState('home_page')
       }
@@ -197,23 +197,24 @@ const Booking: React.FC<BookingProps> = () => {
         )}
         {step === 2 && (
           <div className="flex h-full flex-1 flex-col justify-center gap-8">
-            <div className="flex flex-1 gap-8 text-lg">
+            <div className="flex flex-1 justify-evenly gap-8 text-lg">
               <div className="flex flex-1 flex-col items-center gap-2 font-bold">
-                <span>{t('home_page.booking.step.1.field.payment_method.label')}</span>
-                <div className="flex h-full w-full items-center justify-between gap-6">
+                {/* <span>{t('home_page.booking.step.1.field.payment_method.label')}</span> */}
+                <div className="flex w-full flex-1 items-center justify-between gap-4">
                   <TrainSvg className="h-8 w-8 text-blue-800" />
                   <div className="grid flex-1 grid-rows-1">
-                    <span className="text-center">{`${from?.name[language as 'th' | 'en']}`}</span>
+                    <span className="line-clamp-1 text-center">{`${from?.name[language as 'th' | 'en']}`}</span>
                     <span className="text-center">{`(${from?.alias || from?.id})`}</span>
                   </div>
                   <ArrowNarrowRightSvg className="h-8 w-8 text-blue-800" />
                   <div className="grid flex-1 grid-rows-1">
-                    <span className="text-center">{`${to?.name[language as 'th' | 'en']}`}</span>
+                    <span className="line-clamp-1 text-center">{`${to?.name[language as 'th' | 'en']}`}</span>
                     <span className="text-center ">{`(${to?.alias || to?.id})`}</span>
                   </div>
                   <TrainSvg className="h-8 w-8 text-blue-800" />
                 </div>
-                <div className="grid grid-cols-3">
+                <InfoButton fromId={from?.id} toId={to?.id} />
+                <div className="grid flex-1 grid-cols-3 gap-4">
                   <div className="flex items-center justify-center gap-2">
                     <CalendarSvg className="h-8 w-8 text-blue-800" />
                     <span className="line-clamp-1">{formatDate(date)}</span>

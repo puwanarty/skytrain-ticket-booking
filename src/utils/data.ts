@@ -4,6 +4,7 @@ import { Line, Station } from '@/types/dto'
 export const lines = raw as Line[]
 export const stations = raw.map((line) => line.stations).flat() as Station[]
 export const interchanges = ['CEN', 'N2'] // define interchanges here
+export const isInterchange = (stationId: string) => (interchanges.includes(stationId) ? 1 : 0)
 
 // create bidirectional connections from stations to calculate the shortest path
 // https://www.geeksforgeeks.org/bidirectional-search/
@@ -102,18 +103,6 @@ const calculateShortestPath = (fromId: string, toId: string, graph: Map<string, 
   return path.reverse()
 }
 
-const simplifyPath = (path: string[]) => {
-  let simplifiedPath: string[] = []
-
-  path.forEach((stationId, index) => {
-    if (index === 0 || index === path.length - 1 || interchanges.includes(stationId)) {
-      simplifiedPath.push(stationId)
-    }
-  })
-
-  return simplifiedPath
-}
-
 export const uuid = () => {
   const s4 = () =>
     Math.floor((1 + Math.random()) * 0x10000)
@@ -126,19 +115,12 @@ export const calculateNumberOfStationsBetweenStations = (fromId: string, toId: s
   const graph = generateGraph()
   const path = calculateShortestPath(fromId, toId, graph)
 
-  const simplifiedPath = simplifyPath(path)
-
-  console.log(fromId, toId)
-  // log the path as an array of station ids
-  console.log(path.join(' -> '))
-  // log number of stations between the stations
-  console.log(path.length - 1)
-  // log number of interchanges between the stations
-  console.log(path.filter((stationId) => interchanges.includes(stationId)).length)
-  // log the simplified path as an array of station ids
-  console.log(simplifiedPath.join(' -> '))
-
-  return path.length - 1
+  return {
+    path,
+    numberOfStations: path.length - 1,
+    numberOfInterchanges:
+      path.filter((stationId) => interchanges.includes(stationId)).length - isInterchange(fromId) - isInterchange(toId),
+  }
 }
 
 export const calculatePrice = (numberOfStations: number) => {

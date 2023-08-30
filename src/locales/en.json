@@ -73,6 +73,13 @@
                 }
               }
             },
+            "info": {
+              "button": "Click to see more details",
+              "title": "Route Details",
+              "blue": "From/To Station",
+              "green": "Interchange Station",
+              "gray": "Number of Stations"
+            },
             "submit": "Next"
           },
           {
