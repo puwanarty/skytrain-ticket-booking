@@ -9,7 +9,6 @@ const ContractUs = () => {
   const [message, setMessage] = useState<string>('')
 
   const handleSubmit = () => {
-    console.log(name, email, message)
     setName('')
     setEmail('')
     setMessage('')
