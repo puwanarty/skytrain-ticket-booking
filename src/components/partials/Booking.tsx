@@ -71,7 +71,7 @@ const Booking: React.FC<BookingProps> = () => {
           payment,
         }
         createTicket(dto)
-        onChangeState('home_page')
+        onChangeState('my_ticket')
       }
     }
 

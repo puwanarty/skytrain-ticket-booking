@@ -18,10 +18,6 @@ const App = () => {
 
   switch (currentState) {
     case 'home_page':
-      return <Homepage />
-    case 'map':
-      return <NotFound type="under_construction" />
-    case 'booking':
       return <Booking />
     case 'my_ticket':
       return <MyTicket />
