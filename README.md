@@ -41,6 +41,15 @@ This project is still in development. If you find any bugs or issues, please fee
 
 ## Version History
 
+- 1.0.0
+  - Added a FAQ page
+  - Revamped the home page
+- 0.4.0
+  - Major UI changes and improvements
+  - Added a new feature to view and cancel bookings
+  - Added a new feature to calculate simpified route
+  - Added a new feature to calculate price
+  - Various bug fixes and optimizations
 - 0.3.0
   - Added a contract us page
   - Added svg icons for better performance and accessibility
