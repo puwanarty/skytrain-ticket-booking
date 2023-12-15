@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  /* rounded-lg */
+  border-radius: 0.5rem;
+}
+::-webkit-scrollbar-track:hover {
+  /* bg-gray-300 */
+  background: #e5e7eb;
+}
+
+::-webkit-scrollbar-thumb {
+  /* bg-blue-500 */
+  background: #1d4ed8;
+  /* rounded-lg */
+  border-radius: 0.5rem;
+}
