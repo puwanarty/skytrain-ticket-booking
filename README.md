@@ -1,67 +1,42 @@
-# Skytrain Ticket Booking
+# SkyTrain Ticket Booking
 
-This is a simple ticket booking system for the skytrain.
+This is a single page application (SPA) for booking SkyTrain tickets.
 
-## Description
 
-This is a simple ticket booking system for the skytrain. It allows users to book tickets for the skytrain. It also allows users to view their bookings and cancel them if they wish to do so.
+## Built With
 
-_This project is inspired by final project of 4th semester of BSc. Computer Science Course._
+- [Next.js](https://nextjs.org/)
+- [React](https://reactjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+
+## Features
+
+- Home Page: Users can book tickets from this page.
+- My Ticket: Users can view their booked tickets.
+- Inbox: Users can view their messages.
+- Contact Us: Users can contact the support team.
+- FAQ: Frequently asked questions about the application.
+
+_note: The application is not connected to a database. The data is stored in the local storage of the browser._
 
 ## Getting Started
 
-### Dependencies
+To get started, clone the repository and install the dependencies:
 
-- Node.js
-
-### Installing
-
-- Download the project or clone it using git
-- Open the project in your favourite IDE (I used VS Code)
-
-### Executing program
-
-```
+```bash
 npm install
 ```
 
-```
+Then, run the development server:
+
+```bash
 npm run dev
 ```
 
-Project will be running on <http://localhost:3000>
+Open [http://localhost:3000](http://localhost:3000) to view the project in the browser.
 
-## Help
 
-This project is still in development. If you find any bugs or issues, please feel free to open an issue.
+## Deployment
 
-## Authors
-
-- [@puwanarty](https://github.com/puwanarty)
-
-## Version History
-
-- 1.0.0
-  - Added a FAQ page
-  - Revamped the home page
-- 0.4.0
-  - Major UI changes and improvements
-  - Added a new feature to view and cancel bookings
-  - Added a new feature to calculate simpified route
-  - Added a new feature to calculate price
-  - Various bug fixes and optimizations
-- 0.3.0
-  - Added a contract us page
-  - Added svg icons for better performance and accessibility
-  - Various bug fixes and optimizations
-  - See [commit change](https://github.com/puwanarty/skytrain-ticket-booking/commits/v0.3.0) or See [release history](https://github.com/puwanarty/skytrain-ticket-booking/tags)
-- 0.2.0
-  - Added a new feature to view notifications
-  - Various bug fixes and optimizations
-  - See [commit change](https://github.com/puwanarty/skytrain-ticket-booking/commits/v0.2.0) or See [release history](https://github.com/puwanarty/skytrain-ticket-booking/tags)
-- 0.1.0
-  - Initial Release
-
-## License
-
-This project has no license.
+The project is deployed on Vercel and can be viewed at [https://skytrain-ticket-booking.vercel.app/](https://skytrain-ticket-booking.vercel.app/).
